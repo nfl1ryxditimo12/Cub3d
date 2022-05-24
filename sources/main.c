@@ -1,4 +1,4 @@
-#include "init.h"
+#include "cub3d.h"
 
 typedef struct     s_data {
     void        *img;

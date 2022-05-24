@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/05/24 21:04:46 by seunpark          #+#    #+#              #
+#    Updated: 2022/05/24 21:08:16 by seunpark         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME			=	cub3D
 CC				=	gcc
 CFLAGS			=	-Wall -Wextra -Werror
@@ -6,7 +18,7 @@ MLXFLAG			=	-lmlx -framework OpenGL -framework AppKit
 
 ROOT_DIR		=	$(shell pwd)
 INC_DIR			=	includes/
-MLX_DIR			=	$(addprefix $(ROOT_DIR), /minilibx_mms_20200219/)
+MLX_DIR			=	$(addprefix $(ROOT_DIR), /minilibx_mms_20210621/)
 OBJ_DIR			=	objects/
 SRC_DIR			=	sources/
 
