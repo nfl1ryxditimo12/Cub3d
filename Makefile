@@ -2,18 +2,17 @@ NAME			=	cub3D
 CC				=	gcc
 CFLAGS			=	-Wall -Wextra -Werror
 CDEBUGFLAGS		=	-fsanitize=address
+MLXFLAG			=	-lmlx -framework OpenGL -framework AppKit
 
+ROOT_DIR		=	$(shell pwd)
 INC_DIR			=	includes/
-# CONTAINER_INC	=	$(INC_DIR)/
-# ITERATOR_INC	=	$(INC_DIR)/iterators/
-# UTIL_INC		=	$(INC_DIR)/utils/
-MLX_DIR			=	mlx/
+MLX_DIR			=	$(addprefix $(ROOT_DIR), /minilibx_mms_20200219/)
 OBJ_DIR			=	objects/
 SRC_DIR			=	sources/
 
 SOURCES			=	main.c\
 
-MLX_DYLIB		=	mlx/libmlx.dylib
+MLX_DYLIB		=	$(addprefix $(MLX_DIR), libmlx.dylib)
 
 OBJ_FILES		=	$(SOURCES:.c=.o)
 OBJECTS			=	$(addprefix $(OBJ_DIR), $(OBJ_FILES))
@@ -26,12 +25,15 @@ debug	:	CFLAGS += $(CXXDEBUGFLAGS)
 debug	:	re
 
 $(OBJ_DIR)%.o	:	$(SRC_DIR)%.c
-	$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) -I $(MLX_DIR) -I $(INC_DIR) -c $< -o $@
 
 $(NAME)	:	$(OBJECTS)
-	$(CC) $(CFLAGS) -I $(MLX_DIR) $(MLX_DYLIB) $(OBJECTS) -o $(NAME)
+	$(MAKE) -C $(MLX_DIR) all
+	cp $(MLX_DYLIB) ./
+	$(CC) $(CFLAGS) -L $(MLX_DIR) $(MLXFLAG) $(OBJECTS) -o $(NAME)
 
 clean	:
+	$(MAKE) -C $(MLX_DIR) clean
 	rm -rf $(OBJ_DIR)
 	rm -rf .vscode
 
