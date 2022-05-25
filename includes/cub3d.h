@@ -46,6 +46,12 @@ struct	s_mlx
 	void	*mlx;
 	void	*win;
 };
+struct	s_texture_data
+{
+	char	*file_path;
+	int		width;
+	int		height;
+};
 
 struct	s_texture
 {
@@ -59,12 +65,6 @@ struct	s_texture
 	t_texture_data	sprite;
 };
 
-struct	s_texture_data
-{
-	char	*file_path;
-	int		width;
-	int		height;
-};
 
 struct	s_image
 {
