@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+         #
+#    By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/24 21:04:46 by seunpark          #+#    #+#              #
-#    Updated: 2022/05/24 21:08:16 by seunpark         ###   ########.fr        #
+#    Updated: 2022/05/26 21:37:25 by seonkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,9 @@ OBJ_DIR			=	objects/
 SRC_DIR			=	sources/
 
 SOURCES			=	main.c\
+					mini_map.c\
+					player.c\
+					key.c
 
 MLX_DYLIB		=	$(addprefix $(MLX_DIR), libmlx.dylib)
 
