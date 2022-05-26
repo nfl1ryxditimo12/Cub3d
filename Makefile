@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+         #
+#    By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/24 21:04:46 by seunpark          #+#    #+#              #
-#    Updated: 2022/05/26 20:16:35 by seonkim          ###   ########.fr        #
+#    Updated: 2022/05/26 20:39:52 by seunpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

@@ -1,9 +1,9 @@
 #include "cub3d.h"
 
 #define WIDTH		1600
-#define HEIGHT		1000
+#define HEIGHT		900
 #define PIXEL_SIZE	32
-#define WALL_DEFAULT_HEIGHT	1000
+#define WALL_DEFAULT_HEIGHT	900
 
 
 void	window_init(t_mlx *mlx)
@@ -46,8 +46,8 @@ void	game_init(t_game *game)
 				game->map[i][j] = NORTH;
 		}
 	}
-	game->player_pos_x =144;
-	game->player_pos_y = 176;
+	game->player_pos_x = 4 * PIXEL_SIZE + PIXEL_SIZE /2;
+	game->player_pos_y = 5 * PIXEL_SIZE + PIXEL_SIZE /2;
 }
 
 void	var_init(t_var *var)
@@ -60,7 +60,7 @@ void	var_init(t_var *var)
 void	draw_line(t_var *var, int column, int height)
 {
 	int margin = (WALL_DEFAULT_HEIGHT - height) / 2;
-	
+
 	for(int i  = 0; i < height; i++)
 	{
 		int *ptr = (int *)(var->image.addr + ((margin + i) * var->image.size_line + column * 4));
@@ -70,37 +70,37 @@ void	draw_line(t_var *var, int column, int height)
 
 void	draw_rays(t_var *var)
 {
-	double radian = (M_PI / 2) / 1600.0;
+	double radian = (M_PI / 3) / (double)WIDTH;
 
 	double m_cos = cos( 0);
 	double m_sin = sin( 0);
-	printf("%lf, %lf, %lf\n", radian * 1600, m_cos, m_sin);
+	printf("%lf, %lf, %lf\n", radian * WIDTH, m_cos, m_sin);
 	double distance = 0.0;
 	while (var->game.map[((int)round(var->game.player_pos_y + distance * m_sin) / PIXEL_SIZE) - 1][((int)round(var->game.player_pos_x + distance * m_cos) / PIXEL_SIZE) - 1] != WALL)
 		distance += 0.5;
-	
+
 	int wall_pos_x = (int)round(var->game.player_pos_x + distance * m_cos);
 	int wall_pos_y = (int)round(var->game.player_pos_y + distance * m_sin);
 	printf("%d, %d, %lf, %lf\n", wall_pos_x,wall_pos_y, var->game.player_pos_x, var->game.player_pos_y);
-	
-	int dx = (int)fabs(wall_pos_x - var->game.player_pos_x);
-	int dy = (int)fabs(wall_pos_y - var->game.player_pos_y);
+
+	double dx = (int)fabs(wall_pos_x - var->game.player_pos_x);
+	double dy = (int)fabs(wall_pos_y - var->game.player_pos_y);
 
 	int is_big_x = dx > dy ? 1 : 0;
 
 
-	for (double i = -800.0; i < 800.0; i += 1) {
-		m_cos = cos(i * radian);
-		m_sin = sin( i * radian);
+	for (double i = 0.0; i < WIDTH; i += 1) {
+		m_cos = cos((i - WIDTH/2) * radian);
+		m_sin = sin( (i - WIDTH/2) * radian);
 		distance = 0.0;
 		while (var->game.map[((int)round(var->game.player_pos_y + distance * m_sin) / PIXEL_SIZE) - 1][((int)round(var->game.player_pos_x + distance * m_cos) / PIXEL_SIZE) - 1] != WALL)
-			distance += 0.5;
-		
+			distance += 1;
+
 		wall_pos_x = (int)round(var->game.player_pos_x + distance * m_cos);
 		wall_pos_y = (int)round(var->game.player_pos_y + distance * m_sin);
-		
-		dx = (int)fabs(wall_pos_x - var->game.player_pos_x);
-		dy = (int)fabs(wall_pos_y - var->game.player_pos_y);
+
+		dx = fabs(wall_pos_x - var->game.player_pos_x) * 2;
+		dy = fabs(wall_pos_y - var->game.player_pos_y) * 2;
 
 		if (is_big_x)
 		{
@@ -120,7 +120,7 @@ int	game_loop(t_var *var)
 {
 	mlx_destroy_image(var->mlx.mlx, var->image.image);
 	image_init(var);
-	
+
 	draw_rays(var);
 	mlx_put_image_to_window(var->mlx.mlx, var->mlx.win, var->image.image, 0, 0);
 	return (0);
