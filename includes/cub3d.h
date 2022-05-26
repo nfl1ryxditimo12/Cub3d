@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 21:55:25 by seunpark          #+#    #+#             */
-/*   Updated: 2022/05/24 21:55:28 by seunpark         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:55:44 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 # define CUB3D_H
 
 # include "mlx.h"
+# include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <math.h>
 
-# define ESSENTIAL_ELEMENTS 7		// Except map content, N,S,E and W file path & floor, ceilling color
+# define ESSENTIAL_ELEMENTS 6		// Except map content, N,S,E and W file path & floor, ceilling color
 # define MAP_FILE_EXTENSION ".cub"
 
 typedef struct s_mlx			t_mlx;
@@ -65,10 +69,9 @@ struct	s_texture
 	t_texture_data	sprite;
 };
 
-
 struct	s_image
 {
-	void	*img;
+	void	*image;
 	void	*addr;
 	int		bit_per_pixel;
 	int		size_line;
@@ -80,12 +83,19 @@ struct	s_game
 	enum e_map	**map;
 	int			width;
 	int			height;
+	double		player_pos_x;
+	double		player_pos_y;
 };
 
 struct	s_var
 {
+	t_game		game;
 	t_mlx		mlx;
-	t_texture	*image;
+	t_image		image;
+	t_texture	textures;
 };
+
+/* utils.c */
+int	ft_strlen(char *str);
 
 #endif
