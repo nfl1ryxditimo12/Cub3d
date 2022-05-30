@@ -15,11 +15,11 @@ void	image_init(t_image *image, void *mlx, int width, int height)
 
 void	game_init(t_game *game)
 {
-	char map[11][15] = {
+	char map[MAP_ROW][MAP_COL] = {
 	{'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
 	{'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '1'},
 	{'1', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1', '0', '1'},
-	{'1', '1', '1', '1', '0', '0', '0', '0', '0', '0', '1', '0', '1', '0', '1'},
+	{'1', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1', '0', '1', '0', '1'},
 	{'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '1', '0', '1'},
 	{'1', '0', '0', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '0', '1'},
 	{'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
@@ -29,9 +29,9 @@ void	game_init(t_game *game)
 	{'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'}
 	};
 	game->map = (enum e_map **)malloc(sizeof(enum e_map *) * 11);
-	for (int i = 0; i < 11; i++) {
+	for (int i = 0; i < MAP_ROW; i++) {
 		game->map[i] = (enum e_map *)malloc(sizeof(enum e_map) * 15);
-		for (int j = 0; j < 15; j++) {
+		for (int j = 0; j < MAP_COL; j++) {
 			if (map[i][j] == '1')
 				game->map[i][j] = WALL;
 			else if (map[i][j] == '0')
@@ -40,8 +40,9 @@ void	game_init(t_game *game)
 				game->map[i][j] = NORTH;
 		}
 	}
-	game->player_pos_x = 144;
-	game->player_pos_y = 176;
+	game->player_pos_x = 1.5 * PIXEL_SIZE;
+	game->player_pos_y = 3.5 * PIXEL_SIZE;
+	game->th = 355.0;
 }
 
 void	var_init(t_var *var)
@@ -49,9 +50,9 @@ void	var_init(t_var *var)
 	var->angle = 0;
 	window_init(&var->mlx);
 	game_init(&var->game);
-	image_init(&var->map, var->mlx.mlx, MAP_COL * PIXEL_SIZE, MAP_ROW * PIXEL_SIZE);
-	image_init(&var->division, var->mlx.mlx, 10, HEIGHT);
-	image_init(&var->render, var->mlx.mlx, WIDTH, HEIGHT);
+	image_init(&var->map, var->mlx.mlx, MAP_COL * PIXEL_SIZE + 10 + WIDTH, HEIGHT);
+	// image_init(&var->division, var->mlx.mlx, 10, HEIGHT);
+	// image_init(&var->render, var->mlx.mlx, WIDTH, HEIGHT);
 }
 
 // void	draw_render(t_image *image, int column, int height)
@@ -113,11 +114,12 @@ void	var_init(t_var *var)
 int	game_loop(t_var *var)
 {
 	mlx_destroy_image(var->mlx.mlx, var->map.image);
-	mlx_destroy_image(var->mlx.mlx, var->division.image);
-	mlx_destroy_image(var->mlx.mlx, var->render.image);
-	image_init(&var->map, var->mlx.mlx, MAP_COL * PIXEL_SIZE, MAP_ROW * PIXEL_SIZE);
-	image_init(&var->division, var->mlx.mlx, 10, HEIGHT);
-	image_init(&var->render, var->mlx.mlx, WIDTH, HEIGHT);
+	// mlx_destroy_image(var->mlx.mlx, var->division.image);
+	// mlx_destroy_image(var->mlx.mlx, var->render.image);
+	image_init(&var->map, var->mlx.mlx, MAP_COL * PIXEL_SIZE + 10 + WIDTH, HEIGHT);
+	// image_init(&var->map, var->mlx.mlx, MAP_COL * PIXEL_SIZE, MAP_ROW * PIXEL_SIZE);
+	// image_init(&var->division, var->mlx.mlx, 10, HEIGHT);
+	// image_init(&var->render, var->mlx.mlx, WIDTH, HEIGHT);
 	draw_mini_map(var);
 	
 	double k;
@@ -134,8 +136,8 @@ int	game_loop(t_var *var)
 	draw_rays(var);
 	// draw_renders(var);
 	mlx_put_image_to_window(var->mlx.mlx, var->mlx.win, var->map.image, 0, 0);
-	mlx_put_image_to_window(var->mlx.mlx, var->mlx.win, var->division.image, MAP_COL * PIXEL_SIZE, 0);
-	mlx_put_image_to_window(var->mlx.mlx, var->mlx.win, var->render.image, MAP_COL * PIXEL_SIZE + 10, 0);
+	// mlx_put_image_to_window(var->mlx.mlx, var->mlx.win, var->division.image, MAP_COL * PIXEL_SIZE, 0);
+	// mlx_put_image_to_window(var->mlx.mlx, var->mlx.win, var->render.image, MAP_COL * PIXEL_SIZE + 10, 0);
 	return (0);
 }
 
@@ -149,8 +151,8 @@ int main()
 	mlx_hook(var.mlx.win, X_EVENT_KEY_EXIT, 0, &close, &var);
 
 	mlx_put_image_to_window(var.mlx.mlx, var.mlx.win, var.map.image, 0, 0);
-	mlx_put_image_to_window(var.mlx.mlx, var.mlx.win, var.division.image, MAP_COL * PIXEL_SIZE, 0);
-	mlx_put_image_to_window(var.mlx.mlx, var.mlx.win, var.render.image, MAP_COL * PIXEL_SIZE + 10, 0);
+	// mlx_put_image_to_window(var.mlx.mlx, var.mlx.win, var.division.image, MAP_COL * PIXEL_SIZE, 0);
+	// mlx_put_image_to_window(var.mlx.mlx, var.mlx.win, var.render.image, MAP_COL * PIXEL_SIZE + 10, 0);
 	mlx_loop_hook(var.mlx.mlx, &game_loop, &var);
 	mlx_loop(var.mlx.mlx);
 	return(0);

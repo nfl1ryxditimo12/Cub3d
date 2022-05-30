@@ -6,7 +6,7 @@
 #    By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/24 21:04:46 by seunpark          #+#    #+#              #
-#    Updated: 2022/05/26 21:37:25 by seonkim          ###   ########.fr        #
+#    Updated: 2022/05/30 19:20:46 by seonkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,10 +22,7 @@ MLX_DIR			=	$(addprefix $(ROOT_DIR), /minilibx_mms_20210621/)
 OBJ_DIR			=	objects/
 SRC_DIR			=	sources/
 
-SOURCES			=	main.c\
-					mini_map.c\
-					player.c\
-					key.c
+SOURCES			=	test1.c
 
 MLX_DYLIB		=	$(addprefix $(MLX_DIR), libmlx.dylib)
 

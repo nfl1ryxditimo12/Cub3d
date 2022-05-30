@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 21:55:25 by seunpark          #+#    #+#             */
-/*   Updated: 2022/05/26 21:12:54 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/05/30 19:16:39 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # define ESSENTIAL_ELEMENTS 6		// Except map content, N,S,E and W file path & floor, ceilling color
 # define MAP_FILE_EXTENSION ".cub"
 
-#define WIDTH		1600
-#define HEIGHT		1000
+#define WIDTH		800
+#define HEIGHT		500
 #define MAP_COL		15
 #define MAP_ROW		11
 #define PIXEL_SIZE	32
@@ -46,6 +46,37 @@
 #define KEY_LEFT		123
 #define KEY_RIGHT		124
 
+/* =========================== */
+
+#define  EPS            (1e-06)
+#define  is_zero(d)     (fabs(d) < EPS)
+#define  deg2rad(d)     ((d) * M_PI / 180.0)    /* degree to radian */
+#define  rad2deg(d)     ((d) * 180.0 / M_PI)    /* radian to degree */
+#define  min(a,b)       ((a) < (b) ? (a) : (b))
+#define  max(a,b)       ((a) > (b) ? (a) : (b))
+
+#define  SX       	800     /* screen width */
+#define  SY         500     /* screen height */
+#define  FOV        60      /* field of view (in degree) */
+#define  FOV_H      deg2rad(FOV)
+#define  FOV_V      (FOV_H * (double)SY / (double)SX)
+#define  WALL_H     0.1
+
+enum { VERT, HORIZ };
+
+typedef enum { false=0, true=1 } bool;
+typedef enum { DIR_N=0, DIR_E, DIR_W, DIR_S } dir_t;
+
+#define  MAPX   6
+#define  MAPY   5
+
+#define  _2PI       6.28318530717958647692  /* 2 * M_PI */
+
+#define  ROT_UNIT   0.06    /* rad */
+#define  MOVE_UNIT  0.1
+
+/* =========================== */
+
 typedef struct s_mlx			t_mlx;
 typedef struct s_image			t_image;
 typedef struct s_game			t_game;
@@ -64,7 +95,8 @@ enum e_map
 	NORTH,
 	WEST,
 	EAST,
-	EMPTY_SPACE
+	EMPTY_SPACE,
+	NOTHING
 };
 
 struct	s_mlx
@@ -109,6 +141,7 @@ struct	s_game
 	int			height;
 	double		player_pos_x;
 	double		player_pos_y;
+	double		th;
 };
 
 struct	s_var
@@ -131,5 +164,7 @@ void	draw_rays(t_var *var);
 void	draw_line(t_image *image, double x1, double y1, double x2, double y2, int color);
 int		deal_key(int key_code, t_var *var);
 int 	close(t_var *var);
+
+enum e_map map_get_cell(t_game *game, int x, int y);
 
 #endif

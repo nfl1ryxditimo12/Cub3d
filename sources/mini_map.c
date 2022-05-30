@@ -87,5 +87,5 @@ void	draw_mini_map(t_var *var)
 	draw_rectangles(var);
 	draw_lines(var);
 	for (int i = 0; i < 10; i++)
-		draw_line(&var->division, i, 0, i, (double)HEIGHT, 0xFFFFFF);
+		draw_line(&var->map, i + (MAP_COL * PIXEL_SIZE), 0, i + (MAP_COL * PIXEL_SIZE), (double)HEIGHT, 0xFFFFFF);
 }
