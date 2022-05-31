@@ -1,55 +1,19 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include "mlx.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test1.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/31 18:01:15 by seonkim           #+#    #+#             */
+/*   Updated: 2022/05/31 18:09:29 by seonkim          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#define  EPS            (1e-06)
-#define  is_zero(d)     (fabs(d) < EPS)
-#define  deg2rad(d)     ((d)*M_PI/180.0)    /* degree to radian */
-#define  rad2deg(d)     ((d)*180.0/M_PI)    /* radian to degree */
-#define  min(a,b)       ((a)<(b)? (a):(b))
-#define  max(a,b)       ((a)>(b)? (a):(b))
+#include "cub3d.h"
 
-#define  SX         1200     /* screen width */
-#define  SY         800     /* screen height */
-#define  FOV        60      /* field of view (in degree) */
-#define  FOV_H      deg2rad(FOV)
-#define  FOV_V      (FOV_H*(double)SY/(double)SX)
-#define  WALL_H     1.0
-
-static const double ANGLE_PER_PIXEL = FOV_H / (SX-1.);
+static const double ANGLE_PER_PIXEL = FOV_H / (SCREEN_WIDTH-1.);
 static const double FOVH_2 = FOV_H / 2.0;
-
-# define PLAYER_COLOR	0xFF0000
-# define WALL_COLOR		0x333333
-# define SPACE_COLOR	0x999999
-# define GRID_COLOR		0xb3b3b3
-# define DIR_COLOR		0xFFFF66
-
-enum { VERT, HORIZ };
-
-typedef enum { false=0, true=1 } bool;
-typedef enum { DIR_N=0, DIR_E, DIR_W, DIR_S } dir_t;
-
-#define  MAPX   14
-#define  MAPY   33
-#define	PIXEL_SIZE	32
-
-#define  _2PI       6.28318530717958647692  /* 2 * M_PI */
-
-#define  ROT_UNIT   0.06    /* rad */
-#define  MOVE_UNIT  0.15
-
-#define X_EVENT_KEY_PRESS		2
-#define X_EVENT_KEY_EXIT		17 //Exit program key code
-
-#define KEY_ESC			53
-#define KEY_W			13
-#define KEY_S			1
-#define KEY_A			0
-#define KEY_D			2
-#define KEY_LEFT		123
-#define KEY_RIGHT		124
 
 
 static int map[MAPX][MAPY] = {
@@ -69,32 +33,6 @@ static int map[MAPX][MAPY] = {
 		{1,1,1,1,1,1,1,1,8,1,1,1,1,1,1,1,8,1,1,1,1,1,1,1,1,1,1,1,1,8,8,8,8}
 	};
 
-typedef struct s_player
-{
-	double px;
-	double py;
-	double m_px;
-	double m_py;
-	double th;
-}				t_player;
-
-typedef struct s_img
-{
-	void	*img;
-	int		*addr;
-	int		bit_per_pixel;
-	int		size_line;
-	int		endian;
-}				t_img;
-
-typedef struct s_vec
-{
-	void *mlx;
-	void *win;
-	t_player player;
-	t_img	img;
-}				t_var;
-
 static int wall_colors[] = {    /* DIR_N, E, W, S */
         0x00ccaaaa, 0x00aaccaa, 0x00aaaacc, 0x00bbbbbb
     };
@@ -102,12 +40,12 @@ static int wall_colors[] = {    /* DIR_N, E, W, S */
 
 void image_init(t_var *var)
 {
-	var->img.img = mlx_new_image(var->mlx, SX + MAPY * PIXEL_SIZE + 10, SY);
-	var->img.addr = (int *)mlx_get_data_addr(var->img.img, &var->img.bit_per_pixel,
-										&var->img.size_line, &var->img.endian);
+	var->image.image = mlx_new_image(var->mlx, SCREEN_WIDTH + MAPY * PIXEL_SIZE + 10, SCREEN_HEIGHT);
+	var->image.addr = (int *)mlx_get_data_addr(var->image.image, &var->image.bit_per_pixel,
+										&var->image.size_line, &var->image.endian);
 }
 
-void	draw_line(t_img *image, double x1, double y1, double x2, double y2, int color)
+void	draw_line(t_image *image, double x1, double y1, double x2, double y2, int color)
 {
 	double	deltaX;
 	double	deltaY;
@@ -218,17 +156,17 @@ get_wall_intersection( double ray, double px, double py, dir_t* wdir, double* wx
 double
 cast_single_ray(t_var *var, int x, dir_t *wdir )
 {
-    double ray = (var->player.th + FOVH_2) - (x * ANGLE_PER_PIXEL);
+    double ray = (var->game.angle + FOVH_2) - (x * ANGLE_PER_PIXEL);
 
     double wx, wy;  /* coord. of wall intersection point */
 
-    if( get_wall_intersection(ray, var->player.px, var->player.py, wdir, &wx, &wy) == false )
+    if( get_wall_intersection(ray, var->game.px, var->game.py, wdir, &wx, &wy) == false )
         return INFINITY; /* no intersection - maybe bad map? */
 
-    double wdist = l2dist(var->player.px, var->player.py, wx, wy);
-	wdist *= cos(var->player.th - ray);
+    double wdist = l2dist(var->game.px, var->game.py, wx, wy);
+	wdist *= cos(var->game.angle - ray);
 
-	draw_line(&var->img, var->player.m_py, var->player.m_px, wy * (double)PIXEL_SIZE, wx * (double)PIXEL_SIZE, DIR_COLOR);
+	draw_line(&var->image, var->game.m_py, var->game.m_px, wy * (double)PIXEL_SIZE, wx * (double)PIXEL_SIZE, DIR_COLOR);
     return wdist;
 }
 
@@ -236,7 +174,7 @@ int
 get_wall_height( double dist )
 {
     double fov_h = 2.0 * dist * tan(FOV_V/2.0);
-    return (int)(SY * (WALL_H / fov_h)); /* in pixels */
+    return (int)(SCREEN_HEIGHT * (WALL_H / fov_h)); /* in pixels */
 }
 
 void
@@ -245,14 +183,14 @@ draw_wall(t_var *var, double wdist, int x, int color )
     int wh = get_wall_height(wdist);    /* wall height, in pixels */
 
     /* starting/ending y pos of the wall slice */
-    int y0 = (int)((SY - wh)/2.0);
+    int y0 = (int)((SCREEN_HEIGHT - wh)/2.0);
     int y1 = y0 + wh - 1;
 
     /* needs clipping */
     int ystart = max(0, y0);
-    int yend = min(SY-1, y1);
+    int yend = min(SCREEN_HEIGHT-1, y1);
 
-    draw_line(&var->img, x + 10 + MAPY * PIXEL_SIZE, ystart, x + 10 + MAPY * PIXEL_SIZE, yend, color);
+    draw_line(&var->image, x + 10 + MAPY * PIXEL_SIZE, ystart, x + 10 + MAPY * PIXEL_SIZE, yend, color);
 }
 
 /***********************************************************/
@@ -266,17 +204,17 @@ void 	draw_lines(t_var *var)
 	i = 0;
 	while (i < MAPY)
 	{
-		draw_line(&var->img, i * PIXEL_SIZE, 0, i * PIXEL_SIZE, MAPX * PIXEL_SIZE, GRID_COLOR);
+		draw_line(&var->image, i * PIXEL_SIZE, 0, i * PIXEL_SIZE, MAPX * PIXEL_SIZE, GRID_COLOR);
 		i++;
 	}
-	draw_line(&var->img, MAPY * PIXEL_SIZE - 1, 0, MAPY * PIXEL_SIZE - 1, MAPX * PIXEL_SIZE, GRID_COLOR);
+	draw_line(&var->image, MAPY * PIXEL_SIZE - 1, 0, MAPY * PIXEL_SIZE - 1, MAPX * PIXEL_SIZE, GRID_COLOR);
 	j = 0;
 	while (j < MAPX)
 	{
-		draw_line(&var->img, 0, j * PIXEL_SIZE, MAPY * PIXEL_SIZE, j * PIXEL_SIZE, GRID_COLOR);
+		draw_line(&var->image, 0, j * PIXEL_SIZE, MAPY * PIXEL_SIZE, j * PIXEL_SIZE, GRID_COLOR);
 		j++;
 	}
-	draw_line(&var->img, 0, MAPX * PIXEL_SIZE - 1, MAPY * PIXEL_SIZE, MAPX * PIXEL_SIZE - 1, GRID_COLOR);
+	draw_line(&var->image, 0, MAPX * PIXEL_SIZE - 1, MAPY * PIXEL_SIZE, MAPX * PIXEL_SIZE - 1, GRID_COLOR);
 }
 
 void	draw_rectangle(t_var *var, int x, int y, int color)
@@ -295,7 +233,7 @@ void	draw_rectangle(t_var *var, int x, int y, int color)
 			// if (j == 0 || j == PIXEL_SIZE - 1 || i == 0 || i == PIXEL_SIZE - 1)
 			// 	game->img.data[(y + i) * game->img.size_l / 4 + x + j] = 0xb3b3b3;
 			// else
-			var->img.addr[(y + i) * var->img.size_line / 4 + x + j] = color;
+			var->image.addr[(y + i) * var->image.size_line / 4 + x + j] = color;
 		}
 	}
 }
@@ -325,7 +263,7 @@ void	draw_mini_map(t_var *var)
 	draw_rectangles(var);
 	draw_lines(var);
 	for (int i = 0; i < 10; i++)
-		draw_line(&var->img, i + (MAPY * PIXEL_SIZE), 0, i + (MAPY * PIXEL_SIZE), (double)SY, 0xFFFFFF);
+		draw_line(&var->image, i + (MAPY * PIXEL_SIZE), 0, i + (MAPY * PIXEL_SIZE), (double)SCREEN_HEIGHT, 0xFFFFFF);
 }
 /**********************************************************/
 
@@ -367,7 +305,7 @@ int fade_color(int color, double lum)
 
 int main_loop(t_var *var)
 {
-	mlx_destroy_image(var->mlx, var->img.img);
+	mlx_destroy_image(var->mlx, var->image.image);
 	image_init(var);
 	draw_mini_map(var);
 	double k = -1;
@@ -376,25 +314,25 @@ int main_loop(t_var *var)
 	{
 		l = -1;
 		while (++l < MAPY * PIXEL_SIZE)
-			if (l >= var->player.m_py - 3.5 && l <= var->player.m_py + 3.5 && k >= var->player.m_px - 3.5 && k <= var->player.m_px + 3.5) {
-				printf("%lf %lf %lf %lf\n", var->player.px, var->player.py, var->player.m_px, var->player.m_py);
+			if (l >= var->game.m_py - 3.5 && l <= var->game.m_py + 3.5 && k >= var->game.m_px - 3.5 && k <= var->game.m_px + 3.5) {
+				printf("%lf %lf %lf %lf\n", var->game.px, var->game.py, var->game.m_px, var->game.m_py);
 
-				var->img.addr[(int)(k * var->img.size_line / 4) + (int)l] = PLAYER_COLOR;
+				var->image.addr[(int)(k * var->image.size_line / 4) + (int)l] = PLAYER_COLOR;
 			}
 	}
 	// for (double i = 0; i < MAPX; i += MOVE_UNIT) {
 	// 	for (double j = 0; j < MAPY; j += MOVE_UNIT) {
-	// 		if (i >= var->player.py - 0.1 && i <= var->player.py + 0.1 && j >= var->player.px - 0.1 && j <= var->player.px + 0.1) {
+	// 		if (i >= var->game.py - 0.1 && i <= var->game.py + 0.1 && j >= var->game.px - 0.1 && j <= var->game.px + 0.1) {
 
 	// 			int px = (int)(i * (double)PIXEL_SIZE);
 	// 			int py = (int)(j * (double)PIXEL_SIZE);
 	// 			printf("%d %d\n", px, py);
-	// 			var->img.addr[py * var->img.size_line / 4 + px] = PLAYER_COLOR;
+	// 			var->image.addr[py * var->image.size_line / 4 + px] = PLAYER_COLOR;
 	// 		}
 	// 	}
 	// }
 
-	for( int x=0; x<SX; x++ ) {
+	for( int x=0; x<SCREEN_WIDTH; x++ ) {
         dir_t wdir;
         double wdist = cast_single_ray(var, x, &wdir);
 		int color = wall_colors[wdir];
@@ -403,7 +341,7 @@ int main_loop(t_var *var)
         draw_wall(var, wdist, x, color);
     }
 
-	mlx_put_image_to_window(var->mlx, var->win, var->img.img, 0, 0);
+	mlx_put_image_to_window(var->mlx, var->win, var->image.image, 0, 0);
 
 	return (0);
 }
@@ -429,12 +367,12 @@ get_move_offset( double th, int key, double amt, double* pdx, double* pdy )
 }
 
 int
-player_move(t_player* pp, int key, double amt )
+player_move(t_game* pp, int key, double amt )
 {
     double dx=0, dy=0;
     double nx, ny;
 
-    if( get_move_offset(pp->th, key, amt, &dx, &dy) < 0 ) {
+    if( get_move_offset(pp->angle, key, amt, &dx, &dy) < 0 ) {
         fprintf(stderr,"player_move: invalid key %d\n", key);
         return -1;
     }
@@ -454,11 +392,11 @@ player_move(t_player* pp, int key, double amt )
 }
 
 void
-player_rotate(t_player* pp, double th )
+player_rotate(t_game* pp, double th )
 {
-    pp->th += th;
-    if( pp->th < 0 ) pp->th += _2PI;
-    else if( pp->th > _2PI ) pp->th -= _2PI;
+    pp->angle += th;
+    if( pp->angle < 0 ) pp->angle += _2PI;
+    else if( pp->angle > _2PI ) pp->angle -= _2PI;
 }
 
 int		deal_key(int key_code, t_var *var)
@@ -470,10 +408,10 @@ int		deal_key(int key_code, t_var *var)
 		exit(0);
 	}
 	if( key_code == KEY_LEFT || key_code == KEY_RIGHT ) {
-		player_rotate(&var->player, ROT_UNIT * (key_code ==KEY_LEFT ? 1 : -1));
+		player_rotate(&var->game, ROT_UNIT * (key_code ==KEY_LEFT ? 1 : -1));
 	}
 	else if( key_code == KEY_W || key_code == KEY_A || key_code == KEY_S || key_code == KEY_D ) {
-		if( player_move(&var->player, key_code, MOVE_UNIT) == 0 ) {
+		if( player_move(&var->game, key_code, MOVE_UNIT) == 0 ) {
 		}
 	}
 
@@ -486,13 +424,23 @@ int 	close(t_var *var)
 		exit(0);
 }
 
+void	load_texture()
+{
+
+}
+
+void	init_texture()
+{
+	
+}
+
 int
 main( int ac, char** av )
 {
 	t_var	var;
 
 	var.mlx = mlx_init();
-	var.win = mlx_new_window(var.mlx, SX + 10 + MAPY * PIXEL_SIZE, SY, "mlx");
+	var.win = mlx_new_window(var.mlx, SCREEN_WIDTH + 10 + MAPY * PIXEL_SIZE, SCREEN_HEIGHT, "mlx");
 	image_init(&var);
 
     if( ac != 4 ) {
@@ -500,11 +448,11 @@ main( int ac, char** av )
         exit(1);
 	}
     
-    var.player.px = atof(av[1]);
-    var.player.py = atof(av[2]);
-	var.player.m_px = var.player.px * (double)(PIXEL_SIZE);
-    var.player.m_py = var.player.py * (double)(PIXEL_SIZE);
-    var.player.th = deg2rad(atof(av[3]));
+    var.game.px = atof(av[1]);
+    var.game.py = atof(av[2]);
+	var.game.m_px = var.game.px * (double)(PIXEL_SIZE);
+    var.game.m_py = var.game.py * (double)(PIXEL_SIZE);
+    var.game.angle = deg2rad(atof(av[3]));
 
     /* print map */
     // for( int y=MAPY-1; y>=0; y-- ) {
