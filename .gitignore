@@ -2,3 +2,5 @@ objects/
 
 cub3D
 libmlx.dylib
+
+.vscode

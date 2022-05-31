@@ -6,7 +6,7 @@
 #    By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/24 21:04:46 by seunpark          #+#    #+#              #
-#    Updated: 2022/05/31 17:23:06 by seonkim          ###   ########.fr        #
+#    Updated: 2022/05/31 18:12:11 by seonkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ MLX_DIR			=	$(addprefix $(ROOT_DIR), /minilibx_mms_20210621/)
 OBJ_DIR			=	objects/
 SRC_DIR			=	sources/
 
-SOURCES			=	test1.c
+SOURCES			=	main.c
 
 MLX_DYLIB		=	$(addprefix $(MLX_DIR), libmlx.dylib)
 
