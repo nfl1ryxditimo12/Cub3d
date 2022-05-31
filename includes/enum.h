@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:56:47 by seonkim           #+#    #+#             */
-/*   Updated: 2022/05/31 18:03:54 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/05/31 20:52:46 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ enum e_map
 	SOUTH,
 	EAST,
 	WEST,
+	FLOOR,
 	SPRITE,
 	DOOR,
 	EMPTY_SPACE,

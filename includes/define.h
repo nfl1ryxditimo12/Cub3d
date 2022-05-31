@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:56:16 by seonkim           #+#    #+#             */
-/*   Updated: 2022/05/31 18:09:25 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/05/31 19:58:56 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,14 @@
 
 # define  ROT_UNIT   0.06    /* rad */
 # define  MOVE_UNIT  0.15
+
+# define BUFFER_SIZE	10000000
+
+# define IDENTIFIER_NORTH		"NO"
+# define IDENTIFIER_SOUTH		"SO"
+# define IDENTIFIER_WEST		"WEST"
+# define IDENTIFIER_EAST		"EA"
+# define IDENTIFIER_FLOOR		"F"
+# define IDENTIFIER_CEILLING	"C"
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:52:34 by seonkim           #+#    #+#             */
-/*   Updated: 2022/05/31 18:05:49 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/05/31 20:33:59 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,15 @@ struct	s_image
 	int		bit_per_pixel;
 	int		size_line;
 	int		endian;
+	int		image_width;
+	int		image_height;
 };
 
 struct	s_game
 {
-	t_map		**map;
-	int			width;
-	int			height;
+	t_map		**map;	// N x M 만큼의 동적할당
+	int			map_width;
+	int			map_height;
 	double		px;
 	double		py;
 	double		m_px;
@@ -52,7 +54,7 @@ struct	s_var
 	void		*win;
 	t_game		game;
 	t_image		image;
-	t_texture	*texture;
+	t_texture	*texture; // N개의 텍스쳐 만큼 동적할당
 };
 
 #endif
