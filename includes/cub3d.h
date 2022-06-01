@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 21:55:25 by seunpark          #+#    #+#             */
-/*   Updated: 2022/06/01 06:24:31 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/01 17:57:42 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,7 @@
 
 int	parse_cub3d_data(t_var *var, char *filename);
 int	check_valid_map(t_var *var);
+
+int	encode_color(int r, int g, int b);
 
 #endif

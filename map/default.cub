@@ -1,14 +1,19 @@
-NO ./assets/bluestone.xpm
+NO ./assets/wood.xpm
 SO ./assets/colorstone.xpm
 WE ./assets/greystone.xpm
-EA ./assets/purplestone.xpm
+EA ./assets/redbrick.xpm
 
-F 220,100,0
-C 225,30,0
+SP ./assets/barrel.xpm
+
+F 80,188,223
+C 203,194,176
+
+
+
 
         1111111111111111111111111
         1000000000110000000000001
-        1011000001110000000000001
+        1011000001110000000O00001
         1001000000000000000000001
 111111111011000001110000000000001
 100000000011000001110111111111111

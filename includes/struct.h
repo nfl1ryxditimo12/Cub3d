@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:52:34 by seonkim           #+#    #+#             */
-/*   Updated: 2022/05/31 20:33:59 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/01 17:47:41 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ struct	s_image
 	int		endian;
 	int		image_width;
 	int		image_height;
+	int		floor_color;
+	int		ceilling_color;
 };
 
 struct	s_game

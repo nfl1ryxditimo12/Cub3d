@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:56:16 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/01 05:06:17 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/01 19:51:49 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define DEFINE_H
 
 // Except map content, N,S,E and W file path & floor, ceilling color
-# define ESSENTIAL_ELEMENTS	6
+# define ESSENTIAL_ELEMENTS	7
 # define MAP_FILE_EXTENSION ".cub"
 
 # define MAP_COL		15 // 아마 미니맵 기본값으로 바뀔 예정
@@ -24,9 +24,10 @@
 
 # define PLAYER_COLOR	0xFF0000
 # define WALL_COLOR		0x333333
-# define SPACE_COLOR	0x999999
+# define FLOOR_COLOR	0x999999
 # define GRID_COLOR		0xb3b3b3
-# define DIR_COLOR		0xFFFF66
+# define RAY_COLOR		0xFFFF66
+# define SPRITE_COLOR	0x33FF33
 
 # define X_EVENT_KEY_PRESS		2
 # define X_EVENT_KEY_EXIT		17
@@ -70,6 +71,8 @@
 # define IDENTIFIER_SOUTH		"SO"
 # define IDENTIFIER_WEST		"WE"
 # define IDENTIFIER_EAST		"EA"
+# define IDENTIFIER_DOOR		"DO"
+# define IDENTIFIER_SPRITE		"SP"
 # define IDENTIFIER_FLOOR		"F"
 # define IDENTIFIER_CEILLING	"C"
 

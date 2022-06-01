@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:11:35 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/01 16:45:57 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/01 17:45:32 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	set_player_pos(t_var *var, int row, int col)
 		var->game.angle = 90;
 	else if (var->game.map[row][col] == EAST)
 		var->game.angle = 270;
-	var->game.map[row][col] = CEILLING;
+	var->game.map[row][col] = FLOOR;
 	return (1);
 }
 

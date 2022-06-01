@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:16:50 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/01 06:30:49 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/01 19:38:12 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,46 @@ int	load_texture(void *mlx, t_texture *texture, char *filename)
 	return (1);
 }
 
+int	ft_atoi_max_unsigned_char(char *str, int *dest, int *flag)
+{
+	int	cnt;
+	
+	cnt = 0;
+	*dest = 0;
+	while (str[cnt] && (str[cnt] == 32 || str[cnt] == 9))
+		cnt++;
+	while (str[cnt] && str[cnt] != ',' && str[cnt] != 32 && str[cnt] != 9 &&
+			str[cnt] >= '0' && str[cnt] <= '9')
+		*dest = *dest * 10 + str[cnt++]	- '0';
+	while (str[cnt] && (str[cnt] == 32 || str[cnt] == 9 || str[cnt] == ','))
+		cnt++;
+	if (str[cnt] && str[cnt] != ',' && str[cnt] != 32 && str[cnt] != 9 &&
+		!(str[cnt] >= '0' && str[cnt] <= '9'))
+		*flag = 0;
+	if (*dest > 255)
+		*flag = 0;
+	return (cnt);
+}
+
+int	load_color(int *dest, char *color_data)
+{
+	char	*ptr;
+	int		flag;
+	int		r;
+	int		g;
+	int		b;
+
+	ptr = color_data;
+	flag = 1;
+	color_data += ft_atoi_max_unsigned_char(color_data, &r, &flag);
+	color_data += ft_atoi_max_unsigned_char(color_data, &g, &flag);
+	color_data += ft_atoi_max_unsigned_char(color_data, &b, &flag);
+	printf("%d %d %d\n", r, g, b);
+	*dest = encode_color(r, g, b);
+	free(ptr);
+	return (flag);
+}
+
 int	check_essential_elements(t_var *var, char **buffer)
 {
 	int flag;
@@ -188,10 +228,14 @@ int	check_essential_elements(t_var *var, char **buffer)
 			flag += load_texture(var->mlx, &var->texture[2], get_filename(*buffer));
 		else if (!ft_strcmp(*buffer, IDENTIFIER_EAST))
 			flag += load_texture(var->mlx, &var->texture[3], get_filename(*buffer));
+		// else if (!ft_strcmp(*buffer, IDENTIFIER_DOOR))
+		// 	flag += load_texture(var->mlx, &var->texture[4], get_filename(*buffer));
+		else if (!ft_strcmp(*buffer, IDENTIFIER_SPRITE))
+			flag += load_texture(var->mlx, &var->texture[5], get_filename(*buffer));
 		else if (!ft_strcmp(*buffer, IDENTIFIER_FLOOR))
-			flag += 1;//load_texture(var->mlx, &var->texture[4], get_filename(*buffer)); // 색으로 변경 필요
+			flag += load_color(&var->image.floor_color, get_filename(*buffer));
 		else if (!ft_strcmp(*buffer, IDENTIFIER_CEILLING))
-			flag += 1;//load_texture(var->mlx, &var->texture[5], get_filename(*buffer));
+			flag += load_color(&var->image.ceilling_color, get_filename(*buffer));
 		*buffer += get_line_size(*buffer);
 	}
 	if (flag != ESSENTIAL_ELEMENTS)
@@ -238,7 +282,7 @@ int ft_max(int a, int b)
 void	insert_map_data(t_map *line, char data)
 {
 	if (data == '0')
-		*line = CEILLING;
+		*line = FLOOR;
 	else if (data == '1')
 		*line = WALL;
 	else if (data == 'N')
@@ -251,7 +295,7 @@ void	insert_map_data(t_map *line, char data)
 		*line = EAST;
 	else if (data == 'D')
 		*line = DOOR;
-	else if (data == 'M')
+	else if (data == 'O')
 		*line = SPRITE;
 	else if (data == ' ')
 		*line = EMPTY_SPACE;

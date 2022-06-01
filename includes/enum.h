@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:56:47 by seonkim           #+#    #+#             */
-/*   Updated: 2022/05/31 20:52:46 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/01 19:35:08 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,43 @@
 # define ENUM_H
 
 typedef enum e_map	t_map;
+typedef enum e_bool	t_bool;
+typedef enum e_dir	t_dir;
 
 enum e_map
 {
-	CEILLING,
+	FLOOR,
 	WALL,
 	NORTH,
 	SOUTH,
 	EAST,
 	WEST,
-	FLOOR,
+	CEILLING,
 	SPRITE,
 	DOOR,
 	EMPTY_SPACE,
 	NOTHING
 };
 
-enum { VERT, HORIZ };
+enum
+{
+	VERT,
+	HORIZ
+};
 
-typedef enum { false=0, true=1 } bool;
-typedef enum { DIR_N=0, DIR_E, DIR_W, DIR_S } dir_t;
+enum e_bool
+{
+	false,
+	true
+};
+enum e_dir
+{
+	DIR_NORTH,
+	DIR_SOUTH,
+	DIR_WEST,
+	DIR_EAST,
+	DIR_DOOR,
+	DIR_SPRITE
+};
 
 #endif
