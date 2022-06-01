@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:01:15 by seonkim           #+#    #+#             */
-/*   Updated: 2022/05/31 20:17:09 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/01 14:56:15 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -430,66 +430,96 @@ int		deal_key(int key_code, t_var *var)
 // 		exit(0);
 // }
 
-void    load_image(t_var *var, t_texture *texture, char *path, t_image *image)
-{
-    image->image = mlx_xpm_file_to_image(var->mlx, path, &image->image_width, &image->image_height);
-	if (image->image == NULL)
-		printf("nononono\n");
-    image->addr = (int *)mlx_get_data_addr(image->image, &image->bit_per_pixel, &image->size_line, &image->endian);
-	var->texture->texture_image = malloc(sizeof(int) * image->image_height * image->image_width);
-    for (int y = 0; y < image->image_height; y++)
-    {
-        for (int x = 0; x < image->image_width; x++)
-        {
-            texture->texture_image[image->image_width * y + x] = image->addr[image->image_width * y + x];
-        }
-    }
-	texture->texture_height = image->image_height;
-	texture->texture_width = image->image_width;
-    mlx_destroy_image(var->mlx, image->image);
-}
+// void    load_image(t_var *var, t_texture *texture, char *path, t_image *image)
+// {
+//     image->image = mlx_xpm_file_to_image(var->mlx, path, &image->image_width, &image->image_height);
+// 	if (image->image == NULL)
+// 		printf("nononono\n");
+//     image->addr = (int *)mlx_get_data_addr(image->image, &image->bit_per_pixel, &image->size_line, &image->endian);
+// 	var->texture->texture_image = malloc(sizeof(int) * image->image_height * image->image_width);
+//     for (int y = 0; y < image->image_height; y++)
+//     {
+//         for (int x = 0; x < image->image_width; x++)
+//         {
+//             texture->texture_image[image->image_width * y + x] = image->addr[image->image_width * y + x];
+//         }
+//     }
+// 	texture->texture_height = image->image_height;
+// 	texture->texture_width = image->image_width;
+//     mlx_destroy_image(var->mlx, image->image);
+// }
 
-void    load_texture(t_var *var)
-{
-    t_image    image;
+// void    load_texture(t_var *var)
+// {
+//     t_image    image;
 
-	var->texture = malloc(sizeof(t_texture));
-    load_image(var, var->texture, "assets/eagle.xpm", &image);
-}
+// 	var->texture = malloc(sizeof(t_texture));
+//     load_image(var, var->texture, "assets/eagle.xpm", &image);
+// }
 
-int	main( int ac, char** av )
+void test(char *filename)
 {
 	t_var	var;
 
 	var.mlx = mlx_init();
-	var.win = mlx_new_window(var.mlx, SCREEN_WIDTH + 10 + MAPY * PIXEL_SIZE, SCREEN_HEIGHT, "mlx");
-	image_init(&var);
+	parse_cub3d_data(&var, filename);
+	check_valid_map(&var);
+	var.win = mlx_new_window(var.mlx, SCREEN_WIDTH + 10 + (var.game.map_width > 10 ? 10 : var.game.map_width) * PIXEL_SIZE, SCREEN_HEIGHT, "Cub3D");
 
-    if( ac != 4 ) {
-        // fprintf(stderr,"usage: %s x y th(deg)\n", av[0]);
-        exit(1);
+	for (int i =0 ; i< var.game.map_height; i++) {
+		for (int j = 0; var.game.map[i][j] != '\n' ; j++) {
+			if (var.game.map[i][j] == 11)
+				printf("%d ", var.game.map[i][j]);
+			else
+				printf("%d  ", var.game.map[i][j]);
+		}
+		printf("\n");
 	}
 
-	load_texture(&var);
-    
-    var.game.px = atof(av[1]);
-    var.game.py = atof(av[2]);
-	var.game.m_px = var.game.px * (double)(PIXEL_SIZE);
-    var.game.m_py = var.game.py * (double)(PIXEL_SIZE);
-    var.game.angle = deg2rad(atof(av[3]));
-
-    /* print map */
-    // for( int y=MAPY-1; y>=0; y-- ) {
-    //     for( int x=0; x<MAPX; x++ ) {
-    //         // printf("%c ", (map_get_cell(x,y)==1 ? '#':'.'));
-    //     }
-    //     putchar('\n');
-    // }
-
-	mlx_hook(var.win, X_EVENT_KEY_PRESS, 0, &deal_key, &var);
-	mlx_hook(var.win, X_EVENT_KEY_EXIT, 0, &close, &var);
-	mlx_loop_hook(var.mlx, &main_loop, &var);
+	// mlx_hook(var.win, X_EVENT_KEY_PRESS, 0, &deal_key, &var);
+	// mlx_hook(var.win, X_EVENT_KEY_EXIT, 0, &close, &var);
+	
+	// mlx_loop_hook(var.mlx, &main_loop, &var);
     mlx_loop(var.mlx);
+
+}
+
+int	main( int ac, char** av)
+{
+
+	// var.win = mlx_new_window(var.mlx, SCREEN_WIDTH + 10 + MAPY * PIXEL_SIZE, SCREEN_HEIGHT, "mlx");
+	// image_init(&var);
+
+    // if( ac != 4 ) {
+    //     // fprintf(stderr,"usage: %s x y th(deg)\n", av[0]);
+    //     exit(1);
+	// }
+
+	// load_texture(&var);
+    
+    // var.game.px = atof(av[1]);
+    // var.game.py = atof(av[2]);
+	// var.game.m_px = var.game.px * (double)(PIXEL_SIZE);
+    // var.game.m_py = var.game.py * (double)(PIXEL_SIZE);
+    // var.game.angle = deg2rad(atof(av[3]));
+
+    // /* print map */
+    // // for( int y=MAPY-1; y>=0; y-- ) {
+    // //     for( int x=0; x<MAPX; x++ ) {
+    // //         // printf("%c ", (map_get_cell(x,y)==1 ? '#':'.'));
+    // //     }
+    // //     putchar('\n');
+    // // }
+
+	// mlx_hook(var.win, X_EVENT_KEY_PRESS, 0, &deal_key, &var);
+	// mlx_hook(var.win, X_EVENT_KEY_EXIT, 0, &close, &var);
+	// mlx_loop_hook(var.mlx, &main_loop, &var);
+    // mlx_loop(var.mlx);
+
+	(void)ac;
+
+	test(av[1]);
+
 
     return 0;
 }

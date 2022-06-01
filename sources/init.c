@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:12:43 by seonkim           #+#    #+#             */
-/*   Updated: 2022/05/31 18:20:29 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/01 09:23:13 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 int	init_cub3d(t_var *var, char *filename)
 {
-	
+	return (0);
 }

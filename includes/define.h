@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:56:16 by seonkim           #+#    #+#             */
-/*   Updated: 2022/05/31 19:58:56 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/01 05:06:17 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define DEFINE_H
 
 // Except map content, N,S,E and W file path & floor, ceilling color
-# define ESSENTIAL_ELEMENTS 6
+# define ESSENTIAL_ELEMENTS	6
 # define MAP_FILE_EXTENSION ".cub"
 
 # define MAP_COL		15 // 아마 미니맵 기본값으로 바뀔 예정
@@ -64,11 +64,11 @@
 # define  ROT_UNIT   0.06    /* rad */
 # define  MOVE_UNIT  0.15
 
-# define BUFFER_SIZE	10000000
+# define BUFFER_SIZE	1000000
 
 # define IDENTIFIER_NORTH		"NO"
 # define IDENTIFIER_SOUTH		"SO"
-# define IDENTIFIER_WEST		"WEST"
+# define IDENTIFIER_WEST		"WE"
 # define IDENTIFIER_EAST		"EA"
 # define IDENTIFIER_FLOOR		"F"
 # define IDENTIFIER_CEILLING	"C"

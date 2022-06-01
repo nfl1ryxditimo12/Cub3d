@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:16:50 by seonkim           #+#    #+#             */
-/*   Updated: 2022/05/31 21:58:12 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/01 06:30:49 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	check_newline(char **arr)
 
 	if (!arr || !*arr)
 		return (0);
+	size = 0;
 	while (arr[size])
 		size++;
 	return (size);
@@ -63,17 +64,22 @@ int	ft_strcmp(char *s1, char *s2)
 	return (0);
 }
 
-int	read_file(char *filename, char *buffer)
+char	*read_file(char *filename)
 {
+	char	temp[BUFFER_SIZE];
+	char	*ptr;
 	int		fd;
 	ssize_t	state;
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 1)
-		return (1);
-	state = read(fd, buffer, BUFFER_SIZE);
+		return (NULL);
+	state = read(fd, temp, BUFFER_SIZE);
 	close(fd);
-	return ((int)state);
+	if (state < 1)
+		return (NULL);
+	ptr = temp;
+	return (ptr);
 }
 
 char	*ft_strdup(char *str)
@@ -81,13 +87,13 @@ char	*ft_strdup(char *str)
 	char	*dest;
 	int		idx;
 
-	idx = 0;
-	dest = (char *)malloc(ft_str_len(str) + 1);
+	dest = malloc(ft_str_len(str) + 1);
 	if (!str || !dest)
 		return (NULL);
-	while (str[idx])
+	idx = -1;
+	while (str[++idx])
 		dest[idx] = str[idx];
-	dest[idx] = NULL;
+	dest[idx] = '\0';
 	return (dest);
 }
 
@@ -96,13 +102,13 @@ int	until_next_space(char *str)
 	int len;
 
 	len = 0;
-	while (str[len] && (str[len] != 32 || str[len] != 9))
+	while (str[len] && (str[len] != 32 && str[len] != 9))
 		len++;
 	return (len);
 }
 
 
-int		get_line_size(char *str)
+static int		get_line_size(char *str)
 {
 	int	len;
 
@@ -120,18 +126,18 @@ char	*get_filename(char *buffer)
 	int		size;
 	int		idx;
 
-	while (*buffer != 32 || *buffer != 9)
+	while (*buffer != 32 && *buffer != 9)
 		buffer++;
 	while (*buffer == 32 || *buffer == 9)
 		buffer++;
-	size = get_line_size(buffer);
+	size = get_line_size(buffer) - 1;
 	dest = malloc(size + 1);
 	if (!dest)
 		return (NULL);
-	idx = 0;
-	while (idx < size)
+	idx = -1;
+	while (++idx < size)
 		dest[idx] = buffer[idx];
-	dest[idx] = NULL;
+	dest[idx] = '\0';
 	return dest;
 }
 
@@ -146,7 +152,7 @@ int	load_texture(void *mlx, t_texture *texture, char *filename)
 	texture->texture_image = malloc(sizeof(int) * image.image_width * image.image_height);
 	if (!image.image || !texture->texture_image)
 		return (0);
-	image.addr = mlx_get_data_addr(image.image, &image.bit_per_pixel, &image.size_line, &image.endian);
+	image.addr = (int *)mlx_get_data_addr(image.image, &image.bit_per_pixel, &image.size_line, &image.endian);
 	y = -1;
 	while (++y < image.image_height)
     {
@@ -173,7 +179,7 @@ int	check_essential_elements(t_var *var, char **buffer)
 	while (**buffer && flag != ESSENTIAL_ELEMENTS)
 	{
 		while (**buffer == 32 || **buffer == 9)
-			*buffer++;
+			(*buffer)++;
 		if (!ft_strcmp(*buffer, IDENTIFIER_NORTH))
 			flag += load_texture(var->mlx, &var->texture[0], get_filename(*buffer));
 		else if (!ft_strcmp(*buffer, IDENTIFIER_SOUTH))
@@ -183,9 +189,9 @@ int	check_essential_elements(t_var *var, char **buffer)
 		else if (!ft_strcmp(*buffer, IDENTIFIER_EAST))
 			flag += load_texture(var->mlx, &var->texture[3], get_filename(*buffer));
 		else if (!ft_strcmp(*buffer, IDENTIFIER_FLOOR))
-			flag += load_texture(var->mlx, &var->texture[4], get_filename(*buffer)); // 색으로 변경 필요
+			flag += 1;//load_texture(var->mlx, &var->texture[4], get_filename(*buffer)); // 색으로 변경 필요
 		else if (!ft_strcmp(*buffer, IDENTIFIER_CEILLING))
-			flag += load_texture(var->mlx, &var->texture[5], get_filename(*buffer));
+			flag += 1;//load_texture(var->mlx, &var->texture[5], get_filename(*buffer));
 		*buffer += get_line_size(*buffer);
 	}
 	if (flag != ESSENTIAL_ELEMENTS)
@@ -199,15 +205,17 @@ int	is_empty_line(char *buffer)
 
 	idx = 0;
 	while (buffer[idx] && buffer[idx] != '\n')
-		if (buffer[idx] != 32 || buffer[idx++] != 9)
+	{
+		if (buffer[idx] != 32 && buffer[idx] != 9)
 			return (0);
+		idx++;
+	}
 	return (1);
 }
 
 int	get_map_size(char *buffer)
 {
 	int	size;
-	int	line_size;
 
 	size = 0;
 	while (*buffer)
@@ -249,7 +257,6 @@ void	insert_map_data(t_map *line, char data)
 		*line = EMPTY_SPACE;
 	else
 		*line = NOTHING;
-	return (0);
 }
 
 // 배열의 끝에 NULL을 넣어줄지 고민해봐야함
@@ -263,41 +270,53 @@ int	parse_map_data(t_var *var, char *buffer)
 		buffer += get_line_size(buffer);
 	var->game.map_height = get_map_size(buffer);
 	if (var->game.map_height == 0)
-		return (1);
-	var->game.map = (t_map **)malloc(sizeof(t_map *) * var->game.map_height);
+		return (2);
+	var->game.map = (t_map **)malloc(sizeof(t_map *) * var->game.map_height + 1);
 	if (!var->game.map)
-		return (1);
+		return (2);
 	row = -1;
 	var->game.map_width = 0;
 	while (++row < var->game.map_height)
 	{
-		line_size = get_line_size(buffer) - 1;
-		var->game.map_width = ft_max(line_size, var->game.map_width);
-		var->game.map[row] = (t_map *)malloc(sizeof(t_map) * line_size);
+		line_size = get_line_size(buffer);
+		var->game.map_width = ft_max(line_size - 1, var->game.map_width);
+		var->game.map[row] = (t_map *)malloc(sizeof(t_map) * line_size + 1);
 		if (!var->game.map[row])
-			return (2);
+			return (3);
 		col = -1;
 		while (++col < line_size)
-			insert_map_data(&var->game.map[row][col], *buffer);
-		buffer += line_size + 1;
+			insert_map_data(&var->game.map[row][col], *buffer++);
+		var->game.map[row][col] = '\n';
 	}
+	var->game.map[row] = NULL;
 	return (0);
+}
+
+int	parse_error(int errno, char *err)
+{
+	printf("%s\n", err);
+	return (errno);
 }
 
 int	parse_cub3d_data(t_var *var, char *filename)
 {
 	char	*buffer;
+	int		errno;
 
 	// 맵 파일 확장자가 이상한 경우 실패
 	if (check_file_extension(filename, MAP_FILE_EXTENSION))
-		return (1);
+		return (parse_error(1, "Usage: \"./cub3D ./map/file.cub\""));
 	// 파일을 못읽은 경우, 버퍼사이즈보다 파일이 큰 경우, 읽기 실패한 경우 실패
-	if (read_file(filename, buffer))
-		return (1);
+	buffer = read_file(filename);
+	if (!buffer)
+		return (parse_error(1, "Invalid map file!!"));
 	// 동적할당 실패한 경우, 필수 요소가 누락된 경우, 텍스쳐 파일 읽기 실패한 경우
-	if (check_essential_elements(var, &buffer))
-		return (1); // 실패시 동적 할당 해제 필요
+	errno = check_essential_elements(var, &buffer);
+	if (errno)
+		return (parse_error(errno, "Invalid elements!!")); // 실패시 동적 할당 해제 필요
 	// 동적할당 실패한 경우, 맵 중간에 빈 줄이 있는 경우 실패
-	if (parse_map_data(var, buffer))
-		return (1);
+	errno = parse_map_data(var, buffer);
+	if (errno)
+		return (parse_error(errno, "Invalid map data!!"));
+	return (0);
 }
