@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:01:15 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/01 14:56:15 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/01 16:50:42 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,6 @@ static const double ANGLE_PER_PIXEL = FOV_H / (SCREEN_WIDTH-1.);
 static const double FOVH_2 = FOV_H / 2.0;
 
 
-static int map[MAPX][MAPY] = {
-		{8,8,8,8,8,8,8,8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-		{8,8,8,8,8,8,8,8,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{8,8,8,8,8,8,8,8,1,0,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{8,8,8,8,8,8,8,8,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,1,1,1,1,1,1,1,1,0,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1},
-		{1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,0,0,0,0,0,0,1,0,0,0,1,8,8,8,8},
-		{1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1,0,1,0,0,1,0,0,0,1,8,8,8,8},
-		{1,1,0,0,0,0,0,0,1,1,0,1,0,1,0,1,1,1,0,0,0,0,0,0,1,0,0,0,1,8,8,8,8},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,0,1,8,8,8,8},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,1,0,0,1,0,0,0,1,8,8,8,8},
-		{1,1,0,0,0,0,0,1,1,1,0,1,0,1,0,1,1,1,1,1,0,1,1,1,1,0,0,0,1,1,1,8,8},
-		{1,1,1,1,0,1,1,1,8,1,1,1,0,1,0,1,8,1,0,1,1,1,1,0,1,0,0,0,1,8,8,8,8},
-		{1,1,1,1,1,1,1,1,8,1,1,1,1,1,1,1,8,1,1,1,1,1,1,1,1,1,1,1,1,8,8,8,8}
-	};
-
 static int wall_colors[] = {    /* DIR_N, E, W, S */
         0x00ccaaaa, 0x00aaccaa, 0x00aaaacc, 0x00bbbbbb
     };
@@ -40,7 +23,7 @@ static int wall_colors[] = {    /* DIR_N, E, W, S */
 
 void image_init(t_var *var)
 {
-	var->image.image = mlx_new_image(var->mlx, SCREEN_WIDTH + MAPY * PIXEL_SIZE + 10, SCREEN_HEIGHT);
+	var->image.image = mlx_new_image(var->mlx, SCREEN_WIDTH + var->game.map_width * PIXEL_SIZE + 10, SCREEN_HEIGHT);
 	var->image.addr = (int *)mlx_get_data_addr(var->image.image, &var->image.bit_per_pixel,
 										&var->image.size_line, &var->image.endian);
 }
@@ -79,14 +62,17 @@ l2dist( double x0, double y0, double x1, double y1 )
 }
 
 int
-map_get_cell( int x, int y )
+map_get_cell(t_map **map, int x, int y )
 {
     return (x >= 0 && x < MAPX && y >= 0 && y < MAPY) ? map[x][y] : -1;
 }
 
 bool
-get_wall_intersection( double ray, double px, double py, dir_t* wdir, double* wx, double* wy )
+get_wall_intersection(t_var *var, double ray, dir_t* wdir, double* wx, double* wy )
 {
+	double px = var->game.px;
+	double py = var->game.py;
+
     int xstep = sgn( cos(ray) );  /* +1 (right), 0 (no change), -1 (left) */
     int ystep = sgn( sin(ray) );  /* +1 (up),    0 (no change), -1 (down) */
 
@@ -126,7 +112,7 @@ get_wall_intersection( double ray, double px, double py, dir_t* wdir, double* wx
             hit_side = HORIZ;
             // printf(" H(%.2f, %d) ->", g, mapy);
         }
-        int cell = map_get_cell(mapx, mapy);
+        int cell = map_get_cell(var->game.map, mapx, mapy);
         if( cell < 0 ) break;   /* out of map */
 
         if( cell == 1 ) {   /* hit wall? */
@@ -160,7 +146,7 @@ cast_single_ray(t_var *var, int x, dir_t *wdir )
 
     double wx, wy;  /* coord. of wall intersection point */
 
-    if( get_wall_intersection(ray, var->game.px, var->game.py, wdir, &wx, &wy) == false )
+    if( get_wall_intersection(var, ray, wdir, &wx, &wy) == false )
         return INFINITY; /* no intersection - maybe bad map? */
 
     double wdist = l2dist(var->game.px, var->game.py, wx, wy);
@@ -202,19 +188,19 @@ void 	draw_lines(t_var *var)
 	// double k;
 
 	i = 0;
-	while (i < MAPY)
+	while (i < var->game.map_width)
 	{
-		draw_line(&var->image, i * PIXEL_SIZE, 0, i * PIXEL_SIZE, MAPX * PIXEL_SIZE, GRID_COLOR);
+		draw_line(&var->image, i * PIXEL_SIZE, 0, i * PIXEL_SIZE, var->game.map_height * PIXEL_SIZE, GRID_COLOR);
 		i++;
 	}
-	draw_line(&var->image, MAPY * PIXEL_SIZE - 1, 0, MAPY * PIXEL_SIZE - 1, MAPX * PIXEL_SIZE, GRID_COLOR);
+	draw_line(&var->image, var->game.map_width * PIXEL_SIZE - 1, 0, var->game.map_width * PIXEL_SIZE - 1, var->game.map_height * PIXEL_SIZE, GRID_COLOR);
 	j = 0;
-	while (j < MAPX)
+	while (j < var->game.map_height)
 	{
-		draw_line(&var->image, 0, j * PIXEL_SIZE, MAPY * PIXEL_SIZE, j * PIXEL_SIZE, GRID_COLOR);
+		draw_line(&var->image, 0, j * PIXEL_SIZE, var->game.map_width * PIXEL_SIZE, j * PIXEL_SIZE, GRID_COLOR);
 		j++;
 	}
-	draw_line(&var->image, 0, MAPX * PIXEL_SIZE - 1, MAPY * PIXEL_SIZE, MAPX * PIXEL_SIZE - 1, GRID_COLOR);
+	draw_line(&var->image, 0, var->game.map_height * PIXEL_SIZE - 1, var->game.map_width * PIXEL_SIZE, var->game.map_height * PIXEL_SIZE - 1, GRID_COLOR);
 }
 
 void	draw_rectangle(t_var *var, int x, int y, int color)
@@ -244,14 +230,14 @@ void	draw_rectangles(t_var *var)
 	int j;
 
 	i = -1;
-	while (++i < MAPX)
+	while (++i < var->game.map_height)
 	{
 		j = -1;
-		while (++j < MAPY)
+		while (++j < var->game.map_width)
 		{
-			if (map[i][j] == 1)
+			if (var->game.map[i][j] == WALL)
 				draw_rectangle(var, j, i, WALL_COLOR);
-			else
+			else if (var->game.map[i][j] == CEILLING)
 				draw_rectangle(var, j, i, SPACE_COLOR);
 		}
 	}
@@ -307,31 +293,26 @@ int main_loop(t_var *var)
 {
 	mlx_destroy_image(var->mlx, var->image.image);
 	image_init(var);
+	
+	// 미니맵 그리는곳 (격자, 칸)
 	draw_mini_map(var);
+
+
+	// Player position
 	double k = -1;
 	double l;
-	while (++k < MAPX * PIXEL_SIZE)
+	while (++k < var->game.map_height * PIXEL_SIZE)
 	{
 		l = -1;
-		while (++l < MAPY * PIXEL_SIZE)
+		while (++l < var->game.map_width * PIXEL_SIZE)
 			if (l >= var->game.m_py - 3.5 && l <= var->game.m_py + 3.5 && k >= var->game.m_px - 3.5 && k <= var->game.m_px + 3.5) {
 				printf("%lf %lf %lf %lf\n", var->game.px, var->game.py, var->game.m_px, var->game.m_py);
 
 				var->image.addr[(int)(k * var->image.size_line / 4) + (int)l] = PLAYER_COLOR;
 			}
 	}
-	// for (double i = 0; i < MAPX; i += MOVE_UNIT) {
-	// 	for (double j = 0; j < MAPY; j += MOVE_UNIT) {
-	// 		if (i >= var->game.py - 0.1 && i <= var->game.py + 0.1 && j >= var->game.px - 0.1 && j <= var->game.px + 0.1) {
-
-	// 			int px = (int)(i * (double)PIXEL_SIZE);
-	// 			int py = (int)(j * (double)PIXEL_SIZE);
-	// 			printf("%d %d\n", px, py);
-	// 			var->image.addr[py * var->image.size_line / 4 + px] = PLAYER_COLOR;
-	// 		}
-	// 	}
-	// }
-
+	
+	// Ray casting
 	for( int x=0; x<SCREEN_WIDTH; x++ ) {
         dir_t wdir;
         double wdist = cast_single_ray(var, x, &wdir);
@@ -341,6 +322,7 @@ int main_loop(t_var *var)
         draw_wall(var, wdist, x, color);
     }
 
+	// 쓸모없는 부분 (이미지 렌더링 테스트용)
 	for (int i = 0; i < var->texture->texture_height; i++) {
 		for (int j = 0; j < var->texture->texture_width; j++) {
 			var->image.addr[(i * var->image.size_line / 4 + MAPX * PIXEL_SIZE) + j] = var->texture->texture_image[i * var->texture->texture_height + j];
@@ -373,26 +355,26 @@ get_move_offset( double th, int key, double amt, double* pdx, double* pdy )
 }
 
 int
-player_move(t_game* pp, int key, double amt )
+player_move(t_game* game, int key, double amt )
 {
     double dx=0, dy=0;
     double nx, ny;
 
-    if( get_move_offset(pp->angle, key, amt, &dx, &dy) < 0 ) {
+    if( get_move_offset(game->angle, key, amt, &dx, &dy) < 0 ) {
         fprintf(stderr,"player_move: invalid key %d\n", key);
         return -1;
     }
-    nx = pp->px + dx;
-    ny = pp->py + dy;
+    nx = game->px + dx;
+    ny = game->py + dy;
 
-    if( map_get_cell((int)nx, (int)ny) != 0 ) {
+    if( map_get_cell(game->map, (int)nx, (int)ny) != 0 ) {
         printf("** bump !\n");
         return -1;
     }
-    pp->px = nx;
-    pp->py = ny;
-	pp->m_px = pp->m_px + (dx * (double)PIXEL_SIZE);
-	pp->m_py = pp->m_py + (dy * (double)PIXEL_SIZE);
+    game->px = nx;
+    game->py = ny;
+	game->m_px = game->m_px + (dx * (double)PIXEL_SIZE);
+	game->m_py = game->m_py + (dy * (double)PIXEL_SIZE);
 
     return 0;
 }
@@ -407,9 +389,6 @@ player_rotate(t_game* pp, double th )
 
 int		deal_key(int key_code, t_var *var)
 {
-	// int px = (int)var->game.player_pos_x;
-	// int py = (int)var->game.player_pos_y;
-	// printf("%d %d\n", px, py);
 	if(key_code == KEY_ESC ) {   /* quit */
 		exit(0);
 	}
@@ -424,38 +403,11 @@ int		deal_key(int key_code, t_var *var)
 	return (0);
 }
 
-// int 	close(t_var *var)
-// {
-// 	(void)var;
-// 		exit(0);
-// }
-
-// void    load_image(t_var *var, t_texture *texture, char *path, t_image *image)
-// {
-//     image->image = mlx_xpm_file_to_image(var->mlx, path, &image->image_width, &image->image_height);
-// 	if (image->image == NULL)
-// 		printf("nononono\n");
-//     image->addr = (int *)mlx_get_data_addr(image->image, &image->bit_per_pixel, &image->size_line, &image->endian);
-// 	var->texture->texture_image = malloc(sizeof(int) * image->image_height * image->image_width);
-//     for (int y = 0; y < image->image_height; y++)
-//     {
-//         for (int x = 0; x < image->image_width; x++)
-//         {
-//             texture->texture_image[image->image_width * y + x] = image->addr[image->image_width * y + x];
-//         }
-//     }
-// 	texture->texture_height = image->image_height;
-// 	texture->texture_width = image->image_width;
-//     mlx_destroy_image(var->mlx, image->image);
-// }
-
-// void    load_texture(t_var *var)
-// {
-//     t_image    image;
-
-// 	var->texture = malloc(sizeof(t_texture));
-//     load_image(var, var->texture, "assets/eagle.xpm", &image);
-// }
+int 	close(t_var *var)
+{
+	(void)var;
+		exit(0);
+}
 
 void test(char *filename)
 {
@@ -464,7 +416,9 @@ void test(char *filename)
 	var.mlx = mlx_init();
 	parse_cub3d_data(&var, filename);
 	check_valid_map(&var);
-	var.win = mlx_new_window(var.mlx, SCREEN_WIDTH + 10 + (var.game.map_width > 10 ? 10 : var.game.map_width) * PIXEL_SIZE, SCREEN_HEIGHT, "Cub3D");
+	image_init(&var);
+	// 미니맵 10 x 10 으로 맞추는 설정 나중에 해야함
+	var.win = mlx_new_window(var.mlx, SCREEN_WIDTH + 10 + var.game.map_width * PIXEL_SIZE, SCREEN_HEIGHT, "Cub3D");
 
 	for (int i =0 ; i< var.game.map_height; i++) {
 		for (int j = 0; var.game.map[i][j] != '\n' ; j++) {
@@ -475,47 +429,19 @@ void test(char *filename)
 		}
 		printf("\n");
 	}
+	mlx_put_image_to_window(var.mlx, var.win, var.image.image, 0, 0);
 
-	// mlx_hook(var.win, X_EVENT_KEY_PRESS, 0, &deal_key, &var);
-	// mlx_hook(var.win, X_EVENT_KEY_EXIT, 0, &close, &var);
+	mlx_hook(var.win, X_EVENT_KEY_PRESS, 0, &deal_key, &var);
+	mlx_hook(var.win, X_EVENT_KEY_EXIT, 0, &close, &var);
 	
-	// mlx_loop_hook(var.mlx, &main_loop, &var);
+	mlx_loop_hook(var.mlx, &main_loop, &var);
     mlx_loop(var.mlx);
 
 }
 
 int	main( int ac, char** av)
 {
-
-	// var.win = mlx_new_window(var.mlx, SCREEN_WIDTH + 10 + MAPY * PIXEL_SIZE, SCREEN_HEIGHT, "mlx");
-	// image_init(&var);
-
-    // if( ac != 4 ) {
-    //     // fprintf(stderr,"usage: %s x y th(deg)\n", av[0]);
-    //     exit(1);
-	// }
-
-	// load_texture(&var);
-    
-    // var.game.px = atof(av[1]);
-    // var.game.py = atof(av[2]);
-	// var.game.m_px = var.game.px * (double)(PIXEL_SIZE);
-    // var.game.m_py = var.game.py * (double)(PIXEL_SIZE);
-    // var.game.angle = deg2rad(atof(av[3]));
-
-    // /* print map */
-    // // for( int y=MAPY-1; y>=0; y-- ) {
-    // //     for( int x=0; x<MAPX; x++ ) {
-    // //         // printf("%c ", (map_get_cell(x,y)==1 ? '#':'.'));
-    // //     }
-    // //     putchar('\n');
-    // // }
-
-	// mlx_hook(var.win, X_EVENT_KEY_PRESS, 0, &deal_key, &var);
-	// mlx_hook(var.win, X_EVENT_KEY_EXIT, 0, &close, &var);
-	// mlx_loop_hook(var.mlx, &main_loop, &var);
-    // mlx_loop(var.mlx);
-
+	// ac != 2일 때 종료
 	(void)ac;
 
 	test(av[1]);

@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:11:35 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/01 14:37:51 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/01 16:45:57 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,18 +91,19 @@ int	is_player_element(t_map elem)
 
 int	set_player_pos(t_var *var, int row, int col)
 {
-	var->game.px = (double)col + 0.5;
-	var->game.py = (double)row + 0.5;
+	var->game.px = (double)row + 0.5;
+	var->game.py = (double)col + 0.5;
 	var->game.m_px = var->game.px * (double)PIXEL_SIZE;
 	var->game.m_py = var->game.py * (double)PIXEL_SIZE;
 	if (var->game.map[row][col] == NORTH)
-		var->game.angle = 180;
+		var->game.angle = 200.0;
 	else if (var->game.map[row][col] == SOUTH)
 		var->game.angle = 360;
 	else if (var->game.map[row][col] == WEST)
 		var->game.angle = 90;
 	else if (var->game.map[row][col] == EAST)
 		var->game.angle = 270;
+	var->game.map[row][col] = CEILLING;
 	return (1);
 }
 
