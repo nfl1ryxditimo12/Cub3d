@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:16:50 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/02 21:04:20 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/01 19:38:12 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,32 +208,12 @@ int	load_color(int *dest, char *color_data)
 	return (flag);
 }
 
-int	get_sprite(t_var *var, char *buffer)
-{
-	int flag;
-
-	flag = 0;
-	if (!ft_strcmp(buffer, IDENTIFIER_SPRITE_ONE))
-		flag = load_texture(var->mlx, &var->texture[5], get_filename(buffer));
-	else if (!ft_strcmp(buffer, IDENTIFIER_SPRITE_TWO))
-		flag = load_texture(var->mlx, &var->texture[6], get_filename(buffer));
-	else if (!ft_strcmp(buffer, IDENTIFIER_SPRITE_THREE))
-		flag = load_texture(var->mlx, &var->texture[7], get_filename(buffer));
-	else if (!ft_strcmp(buffer, IDENTIFIER_SPRITE_FOUR))
-		flag = load_texture(var->mlx, &var->texture[8], get_filename(buffer));
-	else if (!ft_strcmp(buffer, IDENTIFIER_SPRITE_FIVE))
-		flag = load_texture(var->mlx, &var->texture[9], get_filename(buffer));
-	else if (!ft_strcmp(buffer, IDENTIFIER_SPRITE_SIX))
-		flag = load_texture(var->mlx, &var->texture[10], get_filename(buffer));
-	return (flag);
-}
-
 int	check_essential_elements(t_var *var, char **buffer)
 {
 	int flag;
 
 	flag = 0;
-	var->texture = malloc(sizeof(t_texture) * 12);
+	var->texture = malloc(sizeof(t_texture) * 6);
 	if (!var->texture)
 		return (1);
 	while (**buffer && flag != ESSENTIAL_ELEMENTS)
@@ -248,17 +228,16 @@ int	check_essential_elements(t_var *var, char **buffer)
 			flag += load_texture(var->mlx, &var->texture[2], get_filename(*buffer));
 		else if (!ft_strcmp(*buffer, IDENTIFIER_EAST))
 			flag += load_texture(var->mlx, &var->texture[3], get_filename(*buffer));
-		else if (!ft_strcmp(*buffer, IDENTIFIER_DOOR))
-			flag += load_texture(var->mlx, &var->texture[4], get_filename(*buffer));
+		// else if (!ft_strcmp(*buffer, IDENTIFIER_DOOR))
+		// 	flag += load_texture(var->mlx, &var->texture[4], get_filename(*buffer));
 		else if (!ft_strcmp(*buffer, IDENTIFIER_SPRITE))
-			flag += get_sprite(var, *buffer);
+			flag += load_texture(var->mlx, &var->texture[5], get_filename(*buffer));
 		else if (!ft_strcmp(*buffer, IDENTIFIER_FLOOR))
 			flag += load_color(&var->image.floor_color, get_filename(*buffer));
 		else if (!ft_strcmp(*buffer, IDENTIFIER_CEILLING))
 			flag += load_color(&var->image.ceilling_color, get_filename(*buffer));
 		*buffer += get_line_size(*buffer);
 	}
-	printf("%d\n", flag);
 	if (flag != ESSENTIAL_ELEMENTS)
 		return (2);
 	return (0);
@@ -315,7 +294,7 @@ void	insert_map_data(t_map *line, char data)
 	else if (data == 'E')
 		*line = EAST;
 	else if (data == 'D')
-		*line = CLOSE_DOOR;
+		*line = DOOR;
 	else if (data == 'O')
 		*line = SPRITE;
 	else if (data == ' ')

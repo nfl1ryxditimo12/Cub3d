@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:56:16 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/01 19:51:49 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/02 21:20:42 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 # define DEFINE_H
 
 // Except map content, N,S,E and W file path & floor, ceilling color
-# define ESSENTIAL_ELEMENTS	7
+# define ESSENTIAL_ELEMENTS	13
 # define MAP_FILE_EXTENSION ".cub"
 
 # define MAP_COL		15 // 아마 미니맵 기본값으로 바뀔 예정
 # define MAP_ROW		11
-# define PIXEL_SIZE	32
+# define PIXEL_SIZE		10
 # define WALL_DEFAULT_HEIGHT	1000
 
 # define PLAYER_COLOR	0xFF0000
@@ -28,6 +28,7 @@
 # define GRID_COLOR		0xb3b3b3
 # define RAY_COLOR		0xFFFF66
 # define SPRITE_COLOR	0x33FF33
+# define DOOR_COLOR		0xFF7F00
 
 # define X_EVENT_KEY_PRESS		2
 # define X_EVENT_KEY_EXIT		17
@@ -39,6 +40,7 @@
 # define KEY_D			2
 # define KEY_LEFT		123
 # define KEY_RIGHT		124
+# define KEY_SPACEBAR	49
 
 /* =========================== */
 
@@ -72,8 +74,14 @@
 # define IDENTIFIER_WEST		"WE"
 # define IDENTIFIER_EAST		"EA"
 # define IDENTIFIER_DOOR		"DO"
-# define IDENTIFIER_SPRITE		"SP"
 # define IDENTIFIER_FLOOR		"F"
 # define IDENTIFIER_CEILLING	"C"
+# define IDENTIFIER_SPRITE		"SP"
+# define IDENTIFIER_SPRITE_ONE		"SP_1"
+# define IDENTIFIER_SPRITE_TWO		"SP_2"
+# define IDENTIFIER_SPRITE_THREE	"SP_3"
+# define IDENTIFIER_SPRITE_FOUR		"SP_4"
+# define IDENTIFIER_SPRITE_FIVE		"SP_5"
+# define IDENTIFIER_SPRITE_SIX		"SP_6"
 
 #endif
