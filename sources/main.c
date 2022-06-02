@@ -30,39 +30,23 @@ void	image_init(t_var *var)
 
 void	game_init(t_game *game)
 {
-	// char map[11][15] = {
-	// {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
-	// {'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '1'},
-	// {'1', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1', '0', '1'},
-	// {'1', '1', '1', '1', '0', '0', '0', '0', '0', '0', '1', '0', '1', '0', '1'},
-	// {'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '1', '0', '1'},
-	// {'1', '0', '0', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '0', '1'},
-	// {'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
-	// {'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
-	// {'1', '1', '1', '1', '1', '1', '0', '0', '0', '1', '1', '1', '1', '0', '1'},
-	// {'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
-	// {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'}
-	// };
-	char map[14][33] = {
-	{'9',  '9',  '9',  '9',  '9',  '9',  '9',  '9',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1'},
-	{'9',  '9',  '9',  '9',  '9',  '9',  '9',  '9',  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '1',  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '1'},
-	{'9',  '9',  '9',  '9',  '9',  '9',  '9',  '9',  '1',  '0',  '1',  '1',  '0',  '0',  '0',  '0',  '0',  '1',  '1',  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '7',  '0',  '0',  '0',  '0',  '1'},
-	{'9',  '9',  '9',  '9',  '9',  '9',  '9',  '9',  '1',  '0',  '0',  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '1'},
-	{'1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '0',  '1',  '1',  '0',  '0',  '0',  '0',  '0',  '1',  '1',  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '1'},
-	{'1',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '1',  '1',  '0',  '0',  '0',  '0',  '0',  '1',  '1',  '1',  '0',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1'},
-	{'1',  '1',  '1',  '1',  '0',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '0',  '1',  '1',  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '1',  '0',  '0',  '0',  '1',  '9',  '9',  '9',  '9'},
-	{'1',  '1',  '1',  '1',  '0',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '0',  '1',  '1',  '1',  '0',  '1',  '0',  '1',  '0',  '0',  '1',  '0',  '0',  '0',  '1',  '9',  '9',  '9',  '9'},
-	{'1',  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '1',  '1',  '0',  '1',  '0',  '1',  '0',  '1',  '1',  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '1',  '0',  '0',  '0',  '1',  '9',  '9',  '9',  '9'},
-	{'1',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '1',  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '1',  '0',  '0',  '0',  '1',  '9',  '9',  '9',  '9'},
-	{'1',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '1',  '1',  '0',  '1',  '0',  '1',  '0',  '0',  '1',  '0',  '0',  '0',  '1',  '9',  '9',  '9',  '9'},
-	{'1',  '1',  '0',  '0',  '0',  '0',  '1',  '1',  '1',  '1',  '0',  '1',  '0',  '1',  '0',  '1',  '1',  '1',  '1',  '1',  '0',  '1',  '1',  '1',  '1',  '0',  '0',  '0',  '1',  '1',  '1',  '9',  '9'},
-	{'1',  '1',  '1',  '1',  '0',  '1',  '1',  '1',  '9',  '1',  '1',  '1',  '0',  '1',  '0',  '1',  '9',  '1',  '0',  '1',  '1',  '1',  '1',  '0',  '1',  '0',  '0',  '0',  '1',  '9',  '9',  '9',  '9'},
-	{'1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '9',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '9',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '9',  '9',  '9',  '9'}
+	char map[11][15] = {
+	{'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
+	{'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '1'},
+	{'1', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1', '0', '1'},
+	{'1', '1', '1', '1', '0', '0', '0', '0', '0', '0', '1', '0', '1', '0', '1'},
+	{'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '1', '0', '1'},
+	{'1', '0', '0', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '0', '1'},
+	{'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
+	{'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
+	{'1', '1', '1', '1', '1', '1', '0', '0', '0', '1', '1', '1', '1', '0', '1'},
+	{'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
+	{'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'}
 	};
-	game->map = (enum e_map **)malloc(sizeof(enum e_map *) * 14);
-	for (int i = 0; i < 14; i++) {
-		game->map[i] = (enum e_map *)malloc(sizeof(enum e_map) * 33);
-		for (int j = 0; j < 33; j++) {
+	game->map = (enum e_map **)malloc(sizeof(enum e_map *) * 11);
+	for (int i = 0; i < 11; i++) {
+		game->map[i] = (enum e_map *)malloc(sizeof(enum e_map) * 15);
+		for (int j = 0; j < 15; j++) {
 			if (map[i][j] == '1')
 				game->map[i][j] = WALL;
 			else if (map[i][j] == '0')
@@ -71,9 +55,43 @@ void	game_init(t_game *game)
 				game->map[i][j] = NORTH;
 		}
 	}
-	game->player_pos_x = 14 * PIXEL_SIZE + PIXEL_SIZE /2;
+	game->player_pos_x = 4 * PIXEL_SIZE + PIXEL_SIZE /2;
 	game->player_pos_y = 5 * PIXEL_SIZE + PIXEL_SIZE /2;
 }
+
+// void	game_init(t_game *game)
+// {
+// 	char map[14][33] = {
+// 	{'9',  '9',  '9',  '9',  '9',  '9',  '9',  '9',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1'},
+// 	{'9',  '9',  '9',  '9',  '9',  '9',  '9',  '9',  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '1',  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '1'},
+// 	{'9',  '9',  '9',  '9',  '9',  '9',  '9',  '9',  '1',  '0',  '1',  '1',  '0',  '0',  '0',  '0',  '0',  '1',  '1',  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '7',  '0',  '0',  '0',  '0',  '1'},
+// 	{'9',  '9',  '9',  '9',  '9',  '9',  '9',  '9',  '1',  '0',  '0',  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '1'},
+// 	{'1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '0',  '1',  '1',  '0',  '0',  '0',  '0',  '0',  '1',  '1',  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '1'},
+// 	{'1',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '1',  '1',  '0',  '0',  '0',  '0',  '0',  '1',  '1',  '1',  '0',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1'},
+// 	{'1',  '1',  '1',  '1',  '0',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '0',  '1',  '1',  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '1',  '0',  '0',  '0',  '1',  '9',  '9',  '9',  '9'},
+// 	{'1',  '1',  '1',  '1',  '0',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '0',  '1',  '1',  '1',  '0',  '1',  '0',  '1',  '0',  '0',  '1',  '0',  '0',  '0',  '1',  '9',  '9',  '9',  '9'},
+// 	{'1',  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '1',  '1',  '0',  '1',  '0',  '1',  '0',  '1',  '1',  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '1',  '0',  '0',  '0',  '1',  '9',  '9',  '9',  '9'},
+// 	{'1',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '1',  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '1',  '0',  '0',  '0',  '1',  '9',  '9',  '9',  '9'},
+// 	{'1',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '1',  '1',  '0',  '1',  '0',  '1',  '0',  '0',  '1',  '0',  '0',  '0',  '1',  '9',  '9',  '9',  '9'},
+// 	{'1',  '1',  '0',  '0',  '0',  '0',  '1',  '1',  '1',  '1',  '0',  '1',  '0',  '1',  '0',  '1',  '1',  '1',  '1',  '1',  '0',  '1',  '1',  '1',  '1',  '0',  '0',  '0',  '1',  '1',  '1',  '9',  '9'},
+// 	{'1',  '1',  '1',  '1',  '0',  '1',  '1',  '1',  '9',  '1',  '1',  '1',  '0',  '1',  '0',  '1',  '9',  '1',  '0',  '1',  '1',  '1',  '1',  '0',  '1',  '0',  '0',  '0',  '1',  '9',  '9',  '9',  '9'},
+// 	{'1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '9',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '9',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '9',  '9',  '9',  '9'}
+// 	};
+// 	game->map = (enum e_map **)malloc(sizeof(enum e_map *) * 14);
+// 	for (int i = 0; i < 14; i++) {
+// 		game->map[i] = (enum e_map *)malloc(sizeof(enum e_map) * 33);
+// 		for (int j = 0; j < 33; j++) {
+// 			if (map[i][j] == '1')
+// 				game->map[i][j] = WALL;
+// 			else if (map[i][j] == '0')
+// 				game->map[i][j] = SPACE;
+// 			else if (map[i][j] == 'N')
+// 				game->map[i][j] = NORTH;
+// 		}
+// 	}
+// 	game->player_pos_x = 14 * PIXEL_SIZE + PIXEL_SIZE /2;
+// 	game->player_pos_y = 4 * PIXEL_SIZE + PIXEL_SIZE /2;
+// }
 
 void	var_init(t_var *var)
 {
@@ -93,11 +111,76 @@ void	draw_line(t_var *var, int column, int height)
 	}
 }
 
+/**
+ * origin
+*/
+// void	draw_rays(t_var *var)
+// {
+// 	double foh = (M_PI / 3) / (double)WIDTH;
+// 	printf(" %lf\n", foh);
+
+
+// 	double m_cos = cos(0);
+// 	double m_sin = sin( 0);
+// 	double distance = 0.0;
+// 	while (var->game.map[((int)round(var->game.player_pos_y + distance * m_sin) / PIXEL_SIZE) - 1][((int)round(var->game.player_pos_x + distance * m_cos) / PIXEL_SIZE) - 1] != WALL)
+// 		distance += 0.5;
+
+// 	int wall_pos_x = (int)round(var->game.player_pos_x + distance * m_cos);
+// 	int wall_pos_y = (int)round(var->game.player_pos_y + distance * m_sin);
+// 	printf("%d, %d, %lf, %lf\n", wall_pos_x,wall_pos_y, var->game.player_pos_x, var->game.player_pos_y);
+
+// 	double dx = (int)fabs(wall_pos_x - var->game.player_pos_x);
+// 	double dy = (int)fabs(wall_pos_y - var->game.player_pos_y);
+
+// 	int is_big_x = dx > dy ? 1 : 0;
+
+
+// 	for (double i = 0.0; i < WIDTH; i += 1) {
+// 		double radian = (i - WIDTH/2) * foh;
+// 		m_cos = cos(radian);
+// 		m_sin = sin(radian);
+// 		distance = 0.0;
+// 		while (var->game.map[((int)round(var->game.player_pos_y + distance * m_sin) / PIXEL_SIZE) - 1][((int)round(var->game.player_pos_x + distance * m_cos) / PIXEL_SIZE) - 1] != WALL)
+// 			distance += 0.5;
+
+// 		wall_pos_x = (int)round(var->game.player_pos_x + distance * m_cos);
+// 		wall_pos_y = (int)round(var->game.player_pos_y + distance * m_sin);
+
+// 		dx = fabs(wall_pos_x - var->game.player_pos_x) / PIXEL_SIZE;
+// 		dy = fabs(wall_pos_y - var->game.player_pos_y) / PIXEL_SIZE;
+// 		printf("%lf, %lf\n", dx, dy);
+
+// 		double height;
+// 		double height2;
+
+// 		if (is_big_x)
+// 		{
+// 			height = WALL_DEFAULT_HEIGHT / (dx/ 2 );
+// 			height2 = (double)HEIGHT / (2 * dx * tan(M_PI / 9));
+// 			if (height >= WALL_DEFAULT_HEIGHT)
+// 				height = WALL_DEFAULT_HEIGHT;
+// 		}
+// 		else
+// 		{
+// 			height = WALL_DEFAULT_HEIGHT / (dy /2 );
+// 			height2 =  (double)HEIGHT / (2 * dy * tan(M_PI / 9));
+// 			if (height >= WALL_DEFAULT_HEIGHT)
+// 				height = WALL_DEFAULT_HEIGHT;
+// 		}
+// 		printf("1 = %lf, 2 = %lf\n", height, height2);
+// 		draw_line(var, (int)i, height);
+
+// 	}
+// }
+
 void	draw_rays(t_var *var)
 {
-	double radian = (M_PI / 3) / (double)WIDTH;
+	double foh = (M_PI / 3) / (double)WIDTH;
+	printf(" %lf\n", foh);
 
-	double m_cos = cos( 0);
+
+	double m_cos = cos(0);
 	double m_sin = sin( 0);
 	double distance = 0.0;
 	while (var->game.map[((int)round(var->game.player_pos_y + distance * m_sin) / PIXEL_SIZE) - 1][((int)round(var->game.player_pos_x + distance * m_cos) / PIXEL_SIZE) - 1] != WALL)
@@ -114,8 +197,9 @@ void	draw_rays(t_var *var)
 
 
 	for (double i = 0.0; i < WIDTH; i += 1) {
-		m_cos = cos((i - WIDTH/2) * radian);
-		m_sin = sin( (i - WIDTH/2) * radian);
+		double radian = (i - WIDTH/2) * foh;
+		m_cos = cos(radian);
+		m_sin = sin(radian);
 		distance = 0.0;
 		while (var->game.map[((int)round(var->game.player_pos_y + distance * m_sin) / PIXEL_SIZE) - 1][((int)round(var->game.player_pos_x + distance * m_cos) / PIXEL_SIZE) - 1] != WALL)
 			distance += 0.5;
@@ -123,26 +207,29 @@ void	draw_rays(t_var *var)
 		wall_pos_x = (int)round(var->game.player_pos_x + distance * m_cos);
 		wall_pos_y = (int)round(var->game.player_pos_y + distance * m_sin);
 
-		dx = fabs(wall_pos_x - var->game.player_pos_x);
-		dy = fabs(wall_pos_y - var->game.player_pos_y);
+		dx = fabs(wall_pos_x - var->game.player_pos_x) / PIXEL_SIZE;
+		dy = fabs(wall_pos_y - var->game.player_pos_y) / PIXEL_SIZE;
 		printf("%lf, %lf\n", dx, dy);
+
+		double height;
+		double height2;
 
 		if (is_big_x)
 		{
-			// double height = WALL_DEFAULT_HEIGHT / (dx / 100);
-			double height = (double)HEIGHT / (2 * dx * tan(M_PI / 6));
+			height = WALL_DEFAULT_HEIGHT / (dx/ 2 );
+			height2 = (double)HEIGHT / (2 * dx * tan(M_PI / 9));
 			if (height >= WALL_DEFAULT_HEIGHT)
 				height = WALL_DEFAULT_HEIGHT;
-			draw_line(var, (int)i, height);
 		}
 		else
 		{
-			// double height = WALL_DEFAULT_HEIGHT / (dy / 100);
-			double height =  (double)HEIGHT / (2 * dy * tan(M_PI / 6));
+			height = WALL_DEFAULT_HEIGHT / (dy /2 );
+			height2 =  (double)HEIGHT / (2 * dy * tan(M_PI / 9));
 			if (height >= WALL_DEFAULT_HEIGHT)
 				height = WALL_DEFAULT_HEIGHT;
-			draw_line(var, (int)i, height);
 		}
+		printf("1 = %lf, 2 = %lf\n", height, height2);
+		draw_line(var, (int)i, height);
 
 	}
 }
