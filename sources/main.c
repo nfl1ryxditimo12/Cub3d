@@ -179,57 +179,30 @@ void	draw_rays(t_var *var)
 	double foh = (M_PI / 3) / (double)WIDTH;
 	printf(" %lf\n", foh);
 
-
-	double m_cos = cos(0);
-	double m_sin = sin( 0);
-	double distance = 0.0;
-	while (var->game.map[((int)round(var->game.player_pos_y + distance * m_sin) / PIXEL_SIZE) - 1][((int)round(var->game.player_pos_x + distance * m_cos) / PIXEL_SIZE) - 1] != WALL)
-		distance += 0.5;
-
-	int wall_pos_x = (int)round(var->game.player_pos_x + distance * m_cos);
-	int wall_pos_y = (int)round(var->game.player_pos_y + distance * m_sin);
-	printf("%d, %d, %lf, %lf\n", wall_pos_x,wall_pos_y, var->game.player_pos_x, var->game.player_pos_y);
-
-	double dx = (int)fabs(wall_pos_x - var->game.player_pos_x);
-	double dy = (int)fabs(wall_pos_y - var->game.player_pos_y);
-
-	int is_big_x = dx > dy ? 1 : 0;
-
+	// double pivot = M_PI / 2;
+	double pivot = 0;
 
 	for (double i = 0.0; i < WIDTH; i += 1) {
-		double radian = (i - WIDTH/2) * foh;
-		m_cos = cos(radian);
-		m_sin = sin(radian);
-		distance = 0.0;
+		double radian = (i - WIDTH/2) * foh + pivot;
+		double m_cos = cos(radian);
+		double m_sin = sin(radian);
+		double distance = 0.0;
 		while (var->game.map[((int)round(var->game.player_pos_y + distance * m_sin) / PIXEL_SIZE) - 1][((int)round(var->game.player_pos_x + distance * m_cos) / PIXEL_SIZE) - 1] != WALL)
 			distance += 0.5;
 
-		wall_pos_x = (int)round(var->game.player_pos_x + distance * m_cos);
-		wall_pos_y = (int)round(var->game.player_pos_y + distance * m_sin);
-
-		dx = fabs(wall_pos_x - var->game.player_pos_x) / PIXEL_SIZE;
-		dy = fabs(wall_pos_y - var->game.player_pos_y) / PIXEL_SIZE;
+		// dx = fabs(wall_pos_x - var->game.player_pos_x) / PIXEL_SIZE;
+		// dy = fabs(wall_pos_y - var->game.player_pos_y) / PIXEL_SIZE;
+		// printf("%lf, %lf\n", dx, dy);
+		double dx = distance * cos(pivot - radian) / (double)PIXEL_SIZE;
+		double dy = distance * cos(pivot - radian) / (double)PIXEL_SIZE;
 		printf("%lf, %lf\n", dx, dy);
 
-		double height;
 		double height2;
 
-		if (is_big_x)
-		{
-			height = WALL_DEFAULT_HEIGHT / (dx/ 2 );
-			height2 = (double)HEIGHT / (2 * dx * tan(M_PI / 9));
-			if (height >= WALL_DEFAULT_HEIGHT)
-				height = WALL_DEFAULT_HEIGHT;
-		}
-		else
-		{
-			height = WALL_DEFAULT_HEIGHT / (dy /2 );
-			height2 =  (double)HEIGHT / (2 * dy * tan(M_PI / 9));
-			if (height >= WALL_DEFAULT_HEIGHT)
-				height = WALL_DEFAULT_HEIGHT;
-		}
-		printf("1 = %lf, 2 = %lf\n", height, height2);
-		draw_line(var, (int)i, height);
+		height2 = (double)HEIGHT / ((double)2 * dx * tan(M_PI / 9));
+		if (height2 >= WALL_DEFAULT_HEIGHT)
+			height2 = WALL_DEFAULT_HEIGHT;
+		draw_line(var, (int)i, (int)round(height2));
 
 	}
 }
