@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:56:16 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/02 21:20:42 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/06 16:11:31 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,18 @@
 # define IDENTIFIER_SPRITE_FOUR		"SP_4"
 # define IDENTIFIER_SPRITE_FIVE		"SP_5"
 # define IDENTIFIER_SPRITE_SIX		"SP_6"
+
+# define ERROR_LEVEL	"Error"
+# define INFO_LEVEL		"Info"
+
+# define MEMORY_FAIL		"memory allocate fail"
+# define INVALID_FILENAME	"Usage: \"./cub3D ./map/example.cub\""
+# define INVALID_FILEDATA	"is a broken file"
+# define INVALID_DOOR		"door location is invalid"
+# define INVALID_ELEMENT	"around element is invalid"
+# define INVALID_PLAYER		"invalid player count"
+# define INVALID_MAP		"invalid map"
+# define DOUBLE_MAP			"map must be connected"
+# define NOT_ENOUGH_ELEMENT	"essential elements is not enough"
 
 #endif

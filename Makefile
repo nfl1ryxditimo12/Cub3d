@@ -6,13 +6,13 @@
 #    By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/24 21:04:46 by seunpark          #+#    #+#              #
-#    Updated: 2022/06/01 06:25:09 by seonkim          ###   ########.fr        #
+#    Updated: 2022/06/06 19:53:12 by seonkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	cub3D
 CC				=	gcc
-CFLAGS			=	-Wall -Wextra -Werror -g -o3
+CFLAGS			=	-Wall -Wextra -Werror -g
 CDEBUGFLAGS		=	-fsanitize=address
 MLXFLAG			=	-lmlx -framework OpenGL -framework AppKit
 
@@ -23,8 +23,26 @@ OBJ_DIR			=	objects/
 SRC_DIR			=	sources/
 
 SOURCES			=	main.c\
+					finish.c\
+					check_element_util.c\
+					check_resize_util.c\
+					check_wall_util.c\
+					check.c\
+					color_util.c\
+					draw_map_util.c\
+					draw_render_util.c\
+					draw.c\
+					init.c\
+					key.c\
+					libft_util.c\
+					memory_util.c\
+					parse_element_util.c\
+					parse_file_util.c\
+					parse_map_util.c\
+					parse_util.c\
 					parse.c\
-					check.c
+					ray_casting_math_util.c\
+					ray_casting.c
 
 MLX_DYLIB		=	$(addprefix $(MLX_DIR), libmlx.dylib)
 

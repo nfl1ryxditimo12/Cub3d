@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:52:34 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/02 21:25:44 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/06 19:30:09 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ struct	s_game
 
 struct	s_var
 {
+	int			rand_num;
 	int			open;
 	void		*mlx;
 	void		*win;
@@ -65,11 +66,16 @@ struct	s_var
 struct	s_wall
 {
 	t_dir	wdir;
-	int		door;
+	t_map	door;
 	int		wtx;
+	int		dmapx;
+	int		dmapy;
 	double	wx;
 	double	wy;
+	double	dx;
+	double	dy;
 	double	wdist;
+	double	ddist;
 };
 
 struct	s_sprite
