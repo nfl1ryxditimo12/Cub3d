@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:56:16 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/06 16:11:31 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/06 21:19:18 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 
 /* =========================== */
 
-#define  EPS            (1e-06)
+#define  EPS            1e-06
 #define  is_zero(d)     (fabs(d) < EPS)
 #define  deg2rad(d)     ((d)*M_PI/180.0)    /* degree to radian */
 #define  rad2deg(d)     ((d)*180.0/M_PI)    /* radian to degree */
@@ -57,6 +57,7 @@
 #define  FOV_H      deg2rad(FOV)
 #define  FOV_V      (FOV_H*(double)SCREEN_HEIGHT/(double)SCREEN_WIDTH)
 #define  WALL_H     1.0
+# define TEST		WALL_H + FOV
 
 
 #define  MAPX   14

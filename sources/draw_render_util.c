@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:45:00 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/06 19:45:21 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/06 21:16:04 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,31 @@
 // sprite 그려줌
 void	draw_sprite(t_var *var, t_sprite *sprite, int x)
 {
-	int sh = get_wall_height(sprite->sdist);
+	double	lum;
+	int		sh;
+	int		y0;
+	int		y1;
+	int		ystart;
+	int		yend;
+	int		y;
+	int		ty;
+	int		color;
 
-    int y0 = (int)((SCREEN_HEIGHT - sh) / 2.0);
-    int y1 = y0 + sh - 1;
-	double lum = get_luminosity(var, sprite->sdist);
-
-    int ystart = max(0, y0);
-    int yend = min(SCREEN_HEIGHT-1, y1);
-
-	for (int y = ystart; y <= yend; y++) {
-		int ty = (int)((double)(y - y0) * 64 / sh);
-		int color = var->texture[var->rand_num].texture_image[64 * ty + sprite->stx];
+	sh = get_wall_height(sprite->sdist);
+	y0 = (int)((SCREEN_HEIGHT - sh) / 2.0);
+	y1 = y0 + sh - 1;
+	lum = get_luminosity(var, sprite->sdist);
+	ystart = max(0, y0);
+	yend = min(SCREEN_HEIGHT - 1, y1);
+	y = ystart;
+	while (y <= yend)
+	{
+		ty = (int)((double)((y - y0) * 64) / sh);
+		color = var->texture[var->rand].texture_image[64 * ty + sprite->stx];
 		color = fade_color(color, lum);
-		var->image.addr[y * var->image.size_line / 4 + (x + 10 + var->game.map_width * PIXEL_SIZE)] = color;
+		var->image.addr[y * var->image.size_line / 4 + \
+				(x + 10 + var->game.map_width * PIXEL_SIZE)] = color;
+		y++;
 	}
 }
 
@@ -36,11 +47,9 @@ void	draw_sprite(t_var *var, t_sprite *sprite, int x)
 void	draw_wall(t_var *var, t_wall *wall, int x)
 {
     int wh = get_wall_height(wall->wdist);
-
     int y0 = (int)((SCREEN_HEIGHT - wh)/2.0);
     int y1 = y0 + wh - 1;
 	double lum = get_luminosity(var, wall->wdist);
-
     int ystart = max(0, y0);
     int yend = min(SCREEN_HEIGHT-1, y1);
 

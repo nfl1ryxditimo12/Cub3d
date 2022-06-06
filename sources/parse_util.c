@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:12:27 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/06 19:13:31 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/06 20:52:56 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_newline(char **arr)
 {
-	int size;
+	int	size;
 
 	if (!arr || !*arr)
 		return (0);
@@ -26,7 +26,7 @@ int	check_newline(char **arr)
 
 int	until_next_space(char *str)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	while (str[len] && (str[len] != 32 && str[len] != 9))
@@ -43,5 +43,5 @@ int	get_line_size(char *str)
 		len++;
 	if (str[len] == '\n')
 		len++;
-	return len;
+	return (len);
 }

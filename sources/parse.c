@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:16:50 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/06 19:52:02 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/06 20:53:58 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	set_texture(t_var *var, char *buffer)
 
 int	check_essential_elements(t_var *var, char **buffer)
 {
-	int flag;
+	int	flag;
 
 	flag = 0;
 	var->texture = (t_texture *)ft_alloc(sizeof(t_texture) * 11);
@@ -51,7 +51,7 @@ int	check_essential_elements(t_var *var, char **buffer)
 		*buffer += get_line_size(*buffer);
 	}
 	if (flag != ESSENTIAL_ELEMENTS)
-		return parse_error(2, ERROR_LEVEL, NOT_ENOUGH_ELEMENT);
+		return (parse_error(2, ERROR_LEVEL, NOT_ENOUGH_ELEMENT));
 	return (0);
 }
 
@@ -66,7 +66,7 @@ int	parse_map_data(t_var *var, char *buffer)
 		buffer += get_line_size(buffer);
 	var->game.map_height = get_map_size(buffer);
 	if (var->game.map_height == 0)
-		return parse_error(2, ERROR_LEVEL, INVALID_MAP);
+		return (parse_error(2, ERROR_LEVEL, INVALID_MAP));
 	var->game.map = (t_map **)ft_alloc(sizeof(t_map *) * \
 										var->game.map_height + 1);
 	row = -1;
@@ -85,23 +85,23 @@ int	parse_map_data(t_var *var, char *buffer)
 	return (0);
 }
 
+// 1. 맵 파일 확장자가 이상한 경우 실패
+// 2. 파일을 못읽은 경우, 버퍼사이즈보다 파일이 큰 경우, 읽기 실패한 경우 실패
+// 3. 동적할당 실패한 경우, 필수 요소가 누락된 경우, 텍스쳐 파일 읽기 실패한 경우
+// 4. 동적할당 실패한 경우, 맵 중간에 빈 줄이 있는 경우 실패
 int	parse_cub3d_data(t_var *var, char *filename)
 {
 	char	*buffer;
 	int		errno;
 
-	// 맵 파일 확장자가 이상한 경우 실패
 	if (check_file_extension(filename, MAP_FILE_EXTENSION))
 		return (parse_error(1, ERROR_LEVEL, INVALID_FILENAME));
-	// 파일을 못읽은 경우, 버퍼사이즈보다 파일이 큰 경우, 읽기 실패한 경우 실패
 	buffer = read_file(filename);
 	if (!buffer)
 		return (parse_error(1, ERROR_LEVEL, INVALID_FILEDATA));
-	// 동적할당 실패한 경우, 필수 요소가 누락된 경우, 텍스쳐 파일 읽기 실패한 경우
 	errno = check_essential_elements(var, &buffer);
 	if (errno)
-		return (errno); // 실패시 동적 할당 해제 필요
-	// 동적할당 실패한 경우, 맵 중간에 빈 줄이 있는 경우 실패
+		return (errno);
 	errno = parse_map_data(var, buffer);
 	if (errno)
 		return (errno);

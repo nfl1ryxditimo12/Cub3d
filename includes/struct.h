@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:52:34 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/06 19:30:09 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/06 20:31:50 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ struct	s_game
 
 struct	s_var
 {
-	int			rand_num;
+	int			rand;
 	int			open;
 	void		*mlx;
 	void		*win;

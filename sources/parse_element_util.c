@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:11:21 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/06 19:11:27 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/06 20:51:56 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,46 +18,44 @@ int	load_texture(void *mlx, t_texture *texture, char *filename)
 	int		x;
 	int		y;
 
-	// 잘못된 image 경로 들어왔을 때 터지는거 확인해야함
 	image.image = mlx_xpm_file_to_image(mlx, filename, &image.image_width, \
 														&image.image_height);
 	texture->texture_image = (int *)ft_alloc(sizeof(int) * \
 								image.image_width * image.image_height);
-	if (!image.image || !texture->texture_image)
+	if (!image.image)
 		return (0);
 	image.addr = (int *)mlx_get_data_addr(image.image, &image.bit_per_pixel, \
 											&image.size_line, &image.endian);
 	y = -1;
 	while (++y < image.image_height)
-    {
+	{
 		x = -1;
-        while (++x < image.image_width)
-            texture->texture_image[image.image_width * y + x] = \
+		while (++x < image.image_width)
+			texture->texture_image[image.image_width * y + x] = \
 							image.addr[image.image_width * y + x];
-    }
+	}
 	texture->texture_height = image.image_height;
 	texture->texture_width = image.image_width;
-    mlx_destroy_image(mlx, image.image);
-	if (filename)
-		free(filename);
+	mlx_destroy_image(mlx, image.image);
+	free(filename);
 	return (1);
 }
 
 int	ft_atoi_max_unsigned_char(char *str, int *dest, int *flag)
 {
 	int	cnt;
-	
+
 	cnt = 0;
 	*dest = 0;
 	while (str[cnt] && (str[cnt] == 32 || str[cnt] == 9))
 		cnt++;
-	while (str[cnt] && str[cnt] != ',' && str[cnt] != 32 && str[cnt] != 9 &&
-			str[cnt] >= '0' && str[cnt] <= '9')
-		*dest = *dest * 10 + str[cnt++]	- '0';
+	while (str[cnt] && str[cnt] != ',' && str[cnt] != 32 && str[cnt] != 9 \
+			&& str[cnt] >= '0' && str[cnt] <= '9')
+		*dest = *dest * 10 + str[cnt++] - '0';
 	while (str[cnt] && (str[cnt] == 32 || str[cnt] == 9 || str[cnt] == ','))
 		cnt++;
-	if (str[cnt] && str[cnt] != ',' && str[cnt] != 32 && str[cnt] != 9 &&
-		!(str[cnt] >= '0' && str[cnt] <= '9'))
+	if (str[cnt] && str[cnt] != ',' && str[cnt] != 32 && str[cnt] != 9 \
+			&& !(str[cnt] >= '0' && str[cnt] <= '9'))
 		*flag = 0;
 	if (*dest > 255)
 		*flag = 0;
@@ -84,7 +82,7 @@ int	load_color(int *dest, char *color_data)
 
 int	get_sprite(t_var *var, char *buffer)
 {
-	int flag;
+	int	flag;
 
 	flag = 0;
 	if (!ft_strcmp(buffer, IDENTIFIER_SPRITE_ONE))

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_file_check.c                                 :+:      :+:    :+:   */
+/*   parse_file_util.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 18:43:52 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/06 19:05:42 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/06 20:52:12 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,5 @@ char	*get_filename(char *buffer)
 	while (++idx < size)
 		dest[idx] = buffer[idx];
 	dest[idx] = '\0';
-	return dest;
+	return (dest);
 }

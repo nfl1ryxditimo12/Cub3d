@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   finisher.c                                         :+:      :+:    :+:   */
+/*   finish.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:24:14 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/06 19:15:07 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/06 20:33:37 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	parse_error(int errno, char *level, char *err)
 	return (errno);
 }
 
-int 	close_window(t_var *var)
+int	close_window(t_var *var)
 {
 	printf("end game\n");
 	free_memory(var, 3);

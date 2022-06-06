@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string_util.c                                      :+:      :+:    :+:   */
+/*   libft_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 18:42:30 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/06 19:14:24 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/06 20:45:57 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ char	*ft_strdup(char *str)
 	return (dest);
 }
 
-int ft_max(int a, int b)
+int	ft_max(int a, int b)
 {
 	if (a > b)
-		return a;
-	return b;
+		return (a);
+	return (b);
 }

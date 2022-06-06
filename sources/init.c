@@ -6,13 +6,13 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 18:26:14 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/06 19:57:19 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/06 20:34:35 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void image_init(t_var *var)
+void	image_init(t_var *var)
 {
 	var->image.image = mlx_new_image(var->mlx, SCREEN_WIDTH + \
 						var->game.map_width * PIXEL_SIZE + 10, SCREEN_HEIGHT);
@@ -31,14 +31,13 @@ void	mlx_image_put(t_var *var)
 					PIXEL_SIZE + 110, 0xFFFFFF, "Interaction   : Space bar");
 }
 
-int main_loop(t_var *var)
+int	main_loop(t_var *var)
 {
-	clock_t		ms = clock();
+	clock_t	ms;
 
-	// 이부분이 시간으로 랜덤 난수 생성하는 부분
-	if (!(ms % 30)) {
-		var->rand_num = (rand() % 6) + 5;
-	}
+	ms = clock();
+	if (!(ms % 30))
+		var->rand = (rand() % 6) + 5;
 	mlx_destroy_image(var->mlx, var->image.image);
 	image_init(var);
 	draw_game(var);
@@ -69,6 +68,6 @@ int	cub3d_init(t_var *var, char *filename)
 	image_init(var);
 	var->win = mlx_new_window(var->mlx, SCREEN_WIDTH + 10 + \
 				var->game.map_width * PIXEL_SIZE, SCREEN_HEIGHT, "Cub3D");
-	var->rand_num = 5;
+	var->rand = 5;
 	return (0);
 }
