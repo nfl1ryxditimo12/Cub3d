@@ -3,29 +3,52 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+         #
+#    By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/24 21:04:46 by seunpark          #+#    #+#              #
-#    Updated: 2022/05/24 21:08:16 by seunpark         ###   ########.fr        #
+#    Updated: 2022/06/07 19:08:20 by seonkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	cub3D
 CC				=	gcc
-CFLAGS			=	-Wall -Wextra -Werror
+CFLAGS			=	-Wall -Wextra -Werror -g
 CDEBUGFLAGS		=	-fsanitize=address
+MLXFLAG			=	-lmlx -framework OpenGL -framework AppKit
 
+ROOT_DIR		=	$(shell pwd)
 INC_DIR			=	includes/
-# CONTAINER_INC	=	$(INC_DIR)/
-# ITERATOR_INC	=	$(INC_DIR)/iterators/
-# UTIL_INC		=	$(INC_DIR)/utils/
-MLX_DIR			=	minilibx_mms_20210621/
+MLX_DIR			=	$(addprefix $(ROOT_DIR), /minilibx_mms_20210621/)
 OBJ_DIR			=	objects/
 SRC_DIR			=	sources/
 
 SOURCES			=	main.c\
+					finish.c\
+					check_element_util.c\
+					check_resize_util.c\
+					check_wall_util.c\
+					check.c\
+					color_util.c\
+					draw_map_util.c\
+					draw_render_util.c\
+					draw.c\
+					init.c\
+					key.c\
+					libft_util.c\
+					memory_util.c\
+					parse_element_util.c\
+					parse_file_util.c\
+					parse_map_util.c\
+					parse_util.c\
+					parse.c\
+					ray_casting_init.c\
+					ray_casting_intersection_util.c\
+					ray_casting_math_util.c\
+					ray_casting_render_util.c\
+					ray_casting_view_util.c\
+					ray_casting.c
 
-MLX_DYLIB		=	libmlx.dylib
+MLX_DYLIB		=	$(addprefix $(MLX_DIR), libmlx.dylib)
 
 OBJ_FILES		=	$(SOURCES:.c=.o)
 OBJECTS			=	$(addprefix $(OBJ_DIR), $(OBJ_FILES))
@@ -38,14 +61,15 @@ debug	:	CFLAGS += $(CXXDEBUGFLAGS)
 debug	:	re
 
 $(OBJ_DIR)%.o	:	$(SRC_DIR)%.c
-	$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) -I $(MLX_DIR) -I $(INC_DIR) -c $< -o $@
 
 $(NAME)	:	$(OBJECTS)
-	make --directory=$(MLX_DIR)
-	cp ./$(MLX_DIR)$(MLX_DYLIB) ./
-	$(CC) $(CFLAGS) -L./ -lmlx $(OBJECTS) -o $(NAME)
+	$(MAKE) -C $(MLX_DIR) all
+	cp $(MLX_DYLIB) ./
+	$(CC) $(CFLAGS) -L $(MLX_DIR) $(MLXFLAG) $(OBJECTS) -o $(NAME)
 
 clean	:
+	$(MAKE) -C $(MLX_DIR) clean
 	rm -rf $(OBJ_DIR)
 	rm -rf .vscode
 
