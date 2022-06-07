@@ -6,13 +6,12 @@
 /*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:43:46 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/07 21:41:01 by seunpark         ###   ########.fr       */
+/*   Updated: 2022/06/07 22:00:50 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-// x1 부터 x2, y1 부터 y2 까지 선 그리는 함수
 void	draw_line(t_image *image, t_offset p1, t_offset p2, int color)
 {
 	double	delta_x;
@@ -36,7 +35,7 @@ void	draw_line(t_image *image, t_offset p1, t_offset p2, int color)
 	}
 }
 
-// 미니맵 한칸 그려주는 함수
+// draw in minimap
 void	draw_rectangle(t_var *var, int x, int y, int color)
 {
 	int	i;
@@ -53,7 +52,6 @@ void	draw_rectangle(t_var *var, int x, int y, int color)
 	}
 }
 
-// 미니맵 그리는 함수
 void	draw_rectangles(t_var *var)
 {
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:38:15 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/07 21:41:01 by seunpark         ###   ########.fr       */
+/*   Updated: 2022/06/07 21:57:11 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	put_element_coordinate(t_intersection *inter, t_wall *wall, \
 	return (0);
 }
 
-// ray casting 하는 함수
+// real ray casting
 void	get_wall_intersection(t_var *var, double ray, \
 								t_wall *wall, t_sprite *sprite)
 {
@@ -54,7 +54,7 @@ void	get_wall_intersection(t_var *var, double ray, \
 	}
 }
 
-// 보고있는 벽의 좌표를 받아와 벽까지의 길이 구해주는 함수
+// calculate distance
 void	cast_single_ray(t_var *var, int x, t_wall *wall, t_sprite *sprite)
 {
 	double	ray;

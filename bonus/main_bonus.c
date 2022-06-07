@@ -6,13 +6,12 @@
 /*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:01:15 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/07 21:41:36 by seunpark         ###   ########.fr       */
+/*   Updated: 2022/06/07 22:00:06 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-// 문 열고 닫는 함수
 void	handling_door(t_var *var, t_wall *wall)
 {
 	if (wall->ddist > 1.5 || var->open == 0)

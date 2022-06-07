@@ -6,13 +6,12 @@
 /*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:35:12 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/07 21:41:01 by seunpark         ###   ########.fr       */
+/*   Updated: 2022/06/07 22:00:58 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-// sprite, door등 여러 요소들 미니맵에 표시해주는 함수
 void	draw_object(t_var *var)
 {
 	int	i;
@@ -33,7 +32,6 @@ void	draw_object(t_var *var)
 	}
 }
 
-// 위와 동일
 void	draw_mini_map(t_var *var)
 {
 	int			i;

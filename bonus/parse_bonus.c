@@ -6,7 +6,7 @@
 /*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:16:50 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/07 21:41:01 by seunpark         ###   ########.fr       */
+/*   Updated: 2022/06/07 21:59:58 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int	check_essential_elements(t_var *var, char **buffer)
 	return (0);
 }
 
-// 배열의 끝에 NULL을 넣어줄지 고민해봐야함
 int	parse_map_data(t_var *var, char *buffer)
 {
 	int	row;
@@ -85,10 +84,10 @@ int	parse_map_data(t_var *var, char *buffer)
 	return (0);
 }
 
-// 1. 맵 파일 확장자가 이상한 경우 실패
-// 2. 파일을 못읽은 경우, 버퍼사이즈보다 파일이 큰 경우, 읽기 실패한 경우 실패
-// 3. 동적할당 실패한 경우, 필수 요소가 누락된 경우, 텍스쳐 파일 읽기 실패한 경우
-// 4. 동적할당 실패한 경우, 맵 중간에 빈 줄이 있는 경우 실패
+// 1. check map file extensions
+// 2. check unabled reading, bigger than buffer size, failed reading
+// 3. malloc failed, missing essential elements, failed texture files
+// 4. malloc failed, empty line in map datas
 int	parse_cub3d_data(t_var *var, char *filename)
 {
 	char	*buffer;

@@ -6,13 +6,13 @@
 /*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:40:39 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/07 21:41:01 by seunpark         ###   ########.fr       */
+/*   Updated: 2022/06/07 22:01:21 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-// 거리별 명암 조절해주는 함수
+// aka. blur
 double	get_luminosity(t_var *var, double dist)
 {
 	double	lum;
@@ -25,7 +25,6 @@ double	get_luminosity(t_var *var, double dist)
 	return (1. - dist / lum);
 }
 
-// 200 200 200 int형으로 따로 있는 색을 합쳐주는 함수
 int	encode_color(int r, int g, int b)
 {
 	int	color;
@@ -38,7 +37,6 @@ int	encode_color(int r, int g, int b)
 	return (color);
 }
 
-// 16진수 color code에서 r, g, b로 분리해주는 함수
 void	decode_color(int color, int *r, int *g, int *b)
 {
 	*r = color & 0x00ff0000;
@@ -48,7 +46,6 @@ void	decode_color(int color, int *r, int *g, int *b)
 	*b = color & 0x000000ff;
 }
 
-// r, g, b 따로따로 거리를 따라 명암 조절해주는 함수
 int	fade_color(int color, double lum)
 {
 	int	new_color;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   define.h                                           :+:      :+:    :+:   */
+/*   define_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:56:16 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/07 21:31:48 by seunpark         ###   ########.fr       */
+/*   Updated: 2022/06/07 21:50:41 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define ESSENTIAL_ELEMENTS	13
 # define MAP_FILE_EXTENSION ".cub"
 
-# define MAP_COL		15 // 아마 미니맵 기본값으로 바뀔 예정
+# define MAP_COL		15
 # define MAP_ROW		11
 # define PIXEL_SIZE		10
 # define WALL_DEFAULT_HEIGHT	1000
@@ -46,14 +46,14 @@
 
 # define  EPS	1e-06
 
-# define  SCREEN_WIDTH		1200     /* screen width */
-# define  SCREEN_HEIGHT		800     /* screen height */
-# define  FOV				60      /* field of view (in degree) */
+# define  SCREEN_WIDTH		1200
+# define  SCREEN_HEIGHT		800
+# define  FOV				60
 # define  WALL_H			1.0
 
-# define  _2PI		6.28318530717958647692  /* 2 * M_PI */
+# define  _2PI		6.28318530717958647692
 
-# define  ROT_UNIT	0.06    /* rad */
+# define  ROT_UNIT	0.06
 # define  MOVE_UNIT	0.15
 
 # define BUFFER_SIZE	1000000

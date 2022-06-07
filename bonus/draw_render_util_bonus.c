@@ -6,7 +6,7 @@
 /*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:45:00 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/07 21:41:01 by seunpark         ###   ########.fr       */
+/*   Updated: 2022/06/07 22:00:25 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	min(int a, int b)
 	return (b);
 }
 
-// sprite 그려줌
 void	draw_sprite(t_var *var, t_sprite *sprite, int x)
 {
 	t_draw_sprite_var	tmp;
@@ -75,7 +74,6 @@ static void	draw_ceil_floor(t_var *var, int x, int y1)
 	}
 }
 
-// 벽그려주는 함수
 void	draw_wall(t_var *var, t_wall *wall, int x)
 {
 	t_draw_wall_var	tmp;

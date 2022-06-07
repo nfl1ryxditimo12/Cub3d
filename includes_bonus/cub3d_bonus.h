@@ -6,7 +6,7 @@
 /*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 21:55:25 by seunpark          #+#    #+#             */
-/*   Updated: 2022/06/07 21:34:08 by seunpark         ###   ########.fr       */
+/*   Updated: 2022/06/07 21:54:33 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,14 @@
 # include "struct_bonus.h"
 
 /**
- * @brief 기본 규칙
+ * @brief common rules
  *
- * return 값 0 인 경우 - 성공
- * return 값 1 인 경우 - 실패
- * return 값 2 인 경우 - 실패 (texture 구조체 메모리 해제 필요)
- * return 값 3 인 경우 - 실패 (texture 구조체, map 배열 메모리 해제 필요)
+ * return value 0 -> success
+ * return value 1 -> failed
+ * return value 2 -> failed (need texture struct free)
+ * return value 3 -> failed (need texture struct, map array free)
  *
- * 모든 변수는 직관적으로 설정
- *
- * 텍스쳐 데이터 6개 파싱 -> 맵 데이터 파싱 -> 맵 데이터 유효성 검사 -> 맵 데이터 구조체 할당
+ * six texture file parsing -> parsing map data -> validate map data -> allow struct map data
  */
 
 int		parse_cub3d_data(t_var *var, char *filename);
