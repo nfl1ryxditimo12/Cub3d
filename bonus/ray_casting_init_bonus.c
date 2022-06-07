@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_casting_init.c                                 :+:      :+:    :+:   */
+/*   ray_casting_init_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:52:44 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/07 18:54:18 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/07 21:41:01 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	init_intersection(t_var *var, t_intersection *inter, double ray)
 {

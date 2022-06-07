@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_casting_math_util.c                            :+:      :+:    :+:   */
+/*   ray_casting_math_util_bonus.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:39:54 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/07 17:03:51 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/07 21:41:01 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 // 기울기 구하는 함수
 double	get_dist(double x0, double y0, double x1, double y1)

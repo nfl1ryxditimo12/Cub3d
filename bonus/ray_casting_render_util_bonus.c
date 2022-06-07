@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_casting_render_util.c                          :+:      :+:    :+:   */
+/*   ray_casting_render_util_bonus.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:59:04 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/07 18:54:23 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/07 21:41:01 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	is_zero(double d)
 {

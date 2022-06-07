@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 21:55:25 by seunpark          #+#    #+#             */
-/*   Updated: 2022/06/07 19:36:54 by seunpark         ###   ########.fr       */
+/*   Updated: 2022/06/07 21:34:08 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 # include "mlx.h"
 # include <fcntl.h>
@@ -21,9 +21,9 @@
 # include <unistd.h>
 # include <time.h>
 
-# include "define.h"
-# include "enum.h"
-# include "struct.h"
+# include "define_bonus.h"
+# include "enum_bonus.h"
+# include "struct_bonus.h"
 
 /**
  * @brief 기본 규칙

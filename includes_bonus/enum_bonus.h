@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enum.h                                             :+:      :+:    :+:   */
+/*   enum_bonus.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:56:47 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/02 21:07:37 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/07 21:33:44 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENUM_H
-# define ENUM_H
+#ifndef ENUM_BONUS_H
+# define ENUM_BONUS_H
 
 typedef enum e_map	t_map;
-typedef enum e_bool	t_bool;
 typedef enum e_dir	t_dir;
 
 enum e_map
@@ -39,11 +38,6 @@ enum
 	HORIZ
 };
 
-enum e_bool
-{
-	false,
-	true
-};
 enum e_dir
 {
 	DIR_NORTH,

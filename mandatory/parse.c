@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:16:50 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/01 19:38:12 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/07 21:41:01 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	ft_str_len(char *str)
 {
@@ -171,7 +171,7 @@ int	load_texture(void *mlx, t_texture *texture, char *filename)
 int	ft_atoi_max_unsigned_char(char *str, int *dest, int *flag)
 {
 	int	cnt;
-	
+
 	cnt = 0;
 	*dest = 0;
 	while (str[cnt] && (str[cnt] == 32 || str[cnt] == 9))

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:11:35 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/01 17:45:32 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/07 21:41:01 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 static int	get_line_size(t_map *line)
 {
@@ -58,7 +58,7 @@ int	resize_map(t_var *var)
 		if (!var->game.map[row])
 			return (3);
 	}
-	return (0);	
+	return (0);
 }
 
 int	check_around_elements(t_var *var, int row, int col, int flag)
@@ -126,7 +126,7 @@ int	check_valid_element(t_var *var)
 				return (3);
 			if (is_player_element(var->game.map[row][col]))
 				player_pos += set_player_pos(var, row, col);
-		}	
+		}
 	}
 	if (player_pos != 1)
 		return (3);

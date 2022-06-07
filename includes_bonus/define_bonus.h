@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:56:16 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/07 17:03:06 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/07 21:31:48 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEFINE_H
-# define DEFINE_H
+#ifndef DEFINE_BONUS_H
+# define DEFINE_BONUS_H
 
 // Except map content, N,S,E and W file path & floor, ceilling color
 # define ESSENTIAL_ELEMENTS	13

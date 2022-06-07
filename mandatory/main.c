@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:01:15 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/02 13:15:39 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/07 21:41:01 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 static const double ANGLE_PER_PIXEL = FOV_H / (SCREEN_WIDTH-1.);
 static const double FOVH_2 = FOV_H / 2.0;
@@ -381,13 +381,13 @@ int main_loop(t_var *var)
 {
 	t_wall_pos		wall_pos[SCREEN_WIDTH];
 	t_sprite_pos	sprite_pos[SCREEN_WIDTH];
-	
+
 	mlx_destroy_image(var->mlx, var->image.image);
 	image_init(var);
-	
+
 	// 미니맵 그리는곳 (격자, 칸)
 	draw_mini_map(var);
-	
+
 	// Ray casting
 	for( int x=0; x<SCREEN_WIDTH; x++ ) {
         t_dir		wdir;
@@ -539,7 +539,7 @@ void test(char *filename)
 
 	mlx_hook(var.win, X_EVENT_KEY_PRESS, 0, &deal_key, &var);
 	mlx_hook(var.win, X_EVENT_KEY_EXIT, 0, &close_window, &var);
-	
+
 	mlx_loop_hook(var.mlx, &main_loop, &var);
     mlx_loop(var.mlx);
 

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check.c                                            :+:      :+:    :+:   */
+/*   check_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:11:35 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/06 19:59:49 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/07 21:41:01 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	resize_map(t_var *var)
 {
@@ -54,7 +54,7 @@ int	check_valid_element(t_var *var)
 				return (parse_error(3, ERROR_LEVEL, INVALID_ELEMENT));
 			if (is_player_element(var->game.map[row][col]))
 				player_pos += set_player_pos(var, row, col);
-		}	
+		}
 	}
 	if (player_pos != 1)
 		return (parse_error(3, ERROR_LEVEL, INVALID_PLAYER));

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_map_util.c                                    :+:      :+:    :+:   */
+/*   draw_map_util_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:43:46 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/07 19:08:10 by seunpark         ###   ########.fr       */
+/*   Updated: 2022/06/07 21:41:01 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 // x1 부터 x2, y1 부터 y2 까지 선 그리는 함수
 void	draw_line(t_image *image, t_offset p1, t_offset p2, int color)

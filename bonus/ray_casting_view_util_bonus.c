@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   finish.c                                           :+:      :+:    :+:   */
+/*   ray_casting_view_util_bonus.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/06 15:24:14 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/06 20:33:37 by seonkim          ###   ########.fr       */
+/*   Created: 2022/06/07 16:52:25 by seonkim           #+#    #+#             */
+/*   Updated: 2022/06/07 21:41:01 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
-int	parse_error(int errno, char *level, char *err)
+double	fov_h_2(void)
 {
-	printf("%s: %s\n", level, err);
-	return (errno);
+	return (degree_to_radian(FOV) / 2.0);
 }
 
-int	close_window(t_var *var)
+double	fov_h(void)
 {
-	printf("end game\n");
-	free_memory(var, 3);
-	exit(0);
+	return (degree_to_radian(FOV));
+}
+
+double	fov_v(void)
+{
+	double	fh;
+
+	fh = fov_h();
+	return (fh * (double)SCREEN_HEIGHT / (double)SCREEN_WIDTH);
 }
