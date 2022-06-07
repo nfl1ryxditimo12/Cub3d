@@ -3,37 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:43:46 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/06 20:28:16 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/07 19:08:10 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 // x1 부터 x2, y1 부터 y2 까지 선 그리는 함수
-void	draw_line(t_image *image, double x1, double y1, \
-					double x2, double y2, int color)
+void	draw_line(t_image *image, t_offset p1, t_offset p2, int color)
 {
 	double	delta_x;
 	double	delta_y;
 	double	step;
 
-	delta_x = x2 - x1;
-	delta_y = y2 - y1;
+	delta_x = p2.x - p1.x;
+	delta_y = p2.y - p1.y;
 	if (fabs(delta_x) > fabs(delta_y))
 		step = fabs(delta_x);
 	else
 		step = fabs(delta_y);
 	delta_x /= step;
 	delta_y /= step;
-	while (fabs(x2 - x1) > 1 || fabs(y2 - y1) > 1)
+	while (fabs(p2.x - p1.x) > 1 || fabs(p2.y - p1.y) > 1)
 	{
-		image->addr[(int)round(y1) * image->size_line / \
-					4 + (int)round(x1)] = color;
-		x1 += delta_x;
-		y1 += delta_y;
+		image->addr[(int)round(p1.y) * image->size_line / \
+					4 + (int)round(p1.x)] = color;
+		p1.x += delta_x;
+		p1.y += delta_y;
 	}
 }
 
