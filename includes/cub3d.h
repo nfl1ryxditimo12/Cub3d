@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 21:55:25 by seunpark          #+#    #+#             */
-/*   Updated: 2022/06/06 19:52:59 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/07 16:53:47 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@
 
 /**
  * @brief 기본 규칙
- * 
+ *
  * return 값 0 인 경우 - 성공
  * return 값 1 인 경우 - 실패
  * return 값 2 인 경우 - 실패 (texture 구조체 메모리 해제 필요)
  * return 값 3 인 경우 - 실패 (texture 구조체, map 배열 메모리 해제 필요)
- * 
+ *
  * 모든 변수는 직관적으로 설정
- * 
+ *
  * 텍스쳐 데이터 6개 파싱 -> 맵 데이터 파싱 -> 맵 데이터 유효성 검사 -> 맵 데이터 구조체 할당
  */
 
@@ -54,7 +54,8 @@ void handling_door(t_var *var, t_wall *wall);
 /* ============================================= */
 
 /* ray_casting.c */
-t_bool	get_wall_intersection(t_var *var, double ray, t_wall *wall, t_sprite *sprite);
+void	get_wall_intersection(t_var *var, double ray, \
+								t_wall *wall, t_sprite *sprite);
 void	cast_single_ray(t_var *var, int x, t_wall *wall, t_sprite *sprite);
 void	ray_casting(t_var *var, t_wall *wall, t_sprite *sprite);
 
@@ -96,7 +97,7 @@ void	mlx_image_put(t_var *var);
 /* ============================================= */
 
 /* key.c */
-int		player_move(t_game* game, int key, double amt );
+int	    player_move(t_game *game, int key);
 void	player_rotate(t_game* pp, double th );
 int		deal_key(int key_code, t_var *var);
 

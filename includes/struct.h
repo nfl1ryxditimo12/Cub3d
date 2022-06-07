@@ -3,22 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:52:34 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/06 20:31:50 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/07 18:52:56 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
 
-typedef struct s_image			t_image;
-typedef struct s_game			t_game;
-typedef struct s_var			t_var;
-typedef struct s_texture		t_texture;
-typedef struct s_wall			t_wall;
-typedef struct s_sprite			t_sprite;
+typedef struct s_image				t_image;
+typedef struct s_game				t_game;
+typedef struct s_var				t_var;
+typedef struct s_texture			t_texture;
+typedef struct s_wall				t_wall;
+typedef struct s_sprite				t_sprite;
+typedef struct s_draw_wall_var		t_draw_wall_var;
+typedef struct s_draw_sprite_var	t_draw_sprite_var;
+
+
+struct	s_draw_wall_var
+{
+	int		wh;
+	int		y0;
+	int		y1;
+	double	lum;
+	int		yend;
+	int		y;
+	int		ty;
+	int		tex;
+	int		color;
+};
+
+struct	s_draw_sprite_var
+{
+	double	lum;
+	int		sh;
+	int		y0;
+	int		y1;
+	int		ystart;
+	int		yend;
+	int		y;
+	int		ty;
+	int		color;
+};
 
 struct	s_texture
 {

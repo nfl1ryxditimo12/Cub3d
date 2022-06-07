@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_render_util.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:45:00 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/06 21:16:04 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/07 18:57:23 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,48 @@
 // sprite 그려줌
 void	draw_sprite(t_var *var, t_sprite *sprite, int x)
 {
-	double	lum;
-	int		sh;
-	int		y0;
-	int		y1;
-	int		ystart;
-	int		yend;
-	int		y;
-	int		ty;
-	int		color;
+	t_draw_sprite_var	tmp;
 
-	sh = get_wall_height(sprite->sdist);
-	y0 = (int)((SCREEN_HEIGHT - sh) / 2.0);
-	y1 = y0 + sh - 1;
-	lum = get_luminosity(var, sprite->sdist);
-	ystart = max(0, y0);
-	yend = min(SCREEN_HEIGHT - 1, y1);
-	y = ystart;
-	while (y <= yend)
+	tmp.sh = get_wall_height(sprite->sdist);
+	tmp.y0 = (int)((SCREEN_HEIGHT - tmp.sh) / 2.0);
+	tmp.y1 = tmp.y0 + tmp.sh - 1;
+	tmp.lum = get_luminosity(var, sprite->sdist);
+	tmp.ystart = max(0, tmp.y0);
+	tmp.yend = min(SCREEN_HEIGHT - 1, tmp.y1);
+	tmp.y = tmp.ystart;
+	while (tmp.y <= tmp.yend)
 	{
-		ty = (int)((double)((y - y0) * 64) / sh);
-		color = var->texture[var->rand].texture_image[64 * ty + sprite->stx];
-		color = fade_color(color, lum);
-		var->image.addr[y * var->image.size_line / 4 + \
-				(x + 10 + var->game.map_width * PIXEL_SIZE)] = color;
+		tmp.ty = (int)((double)((tmp.y - tmp.y0) * 64) / tmp.sh);
+		tmp.color = var->texture[var->rand]
+			.texture_image[64 * tmp.ty + sprite->stx];
+		tmp.color = fade_color(tmp.color, tmp.lum);
+		var->image.addr[tmp.y * var->image.size_line / 4 + \
+				(x + 10 + var->game.map_width * PIXEL_SIZE)] = tmp.color;
+		tmp.y++;
+	}
+}
+
+static void	draw_ceil_floor(t_var *var, int x, int y1)
+{
+	double	ec;
+	int		y;
+	double	h;
+	double	d;
+	double	lum_f;
+
+	ec = get_fov_min_dist();
+	y = y1 + 1;
+	while (y < SCREEN_HEIGHT)
+	{
+		h = (double)(SCREEN_HEIGHT - 1 - y) / SCREEN_HEIGHT;
+		d = ec / (1. - 2 * h);
+		lum_f = get_luminosity(var, d) - 0.2;
+		var->image.addr[y * var->image.size_line / 4
+			+ (x + 10 + var->game.map_width * PIXEL_SIZE)]
+			= fade_color(var->image.ceilling_color, lum_f);
+		var->image.addr[(SCREEN_HEIGHT - 1 - y) * var->image.size_line / 4
+			+ (x + 10 + var->game.map_width * PIXEL_SIZE)]
+			= fade_color(var->image.floor_color, lum_f);
 		y++;
 	}
 }
@@ -46,34 +64,27 @@ void	draw_sprite(t_var *var, t_sprite *sprite, int x)
 // 벽그려주는 함수
 void	draw_wall(t_var *var, t_wall *wall, int x)
 {
-    int wh = get_wall_height(wall->wdist);
-    int y0 = (int)((SCREEN_HEIGHT - wh)/2.0);
-    int y1 = y0 + wh - 1;
-	double lum = get_luminosity(var, wall->wdist);
-    int ystart = max(0, y0);
-    int yend = min(SCREEN_HEIGHT-1, y1);
+	t_draw_wall_var	tmp;
 
-	for (int y = ystart; y <= yend; y++) {
-		int ty = (int)((double)(y - y0) * 64 / wh);
-		int tex = wall->door == CLOSE_DOOR ? DIR_DOOR : wall->wdir;
-		int color = var->texture[tex].texture_image[64 * ty + wall->wtx];
-		color = fade_color(color, lum);
-		var->image.addr[y * var->image.size_line / 4 + (x + 10 + var->game.map_width * PIXEL_SIZE)] = color;
-	}
-
-	// 천장과 바닥 그려주는 부분
-	if (y1 < SCREEN_HEIGHT - 1)
+	tmp.wh = get_wall_height(wall->wdist);
+	tmp.y0 = (int)((SCREEN_HEIGHT - tmp.wh) / 2.0);
+	tmp.y1 = tmp.y0 + tmp.wh - 1;
+	tmp.lum = get_luminosity(var, wall->wdist);
+	tmp.y = max(0, tmp.y0);
+	tmp.yend = min(SCREEN_HEIGHT - 1, tmp.y1);
+	while (tmp.y <= tmp.yend)
 	{
-		double ec = get_fov_min_dist();
-
-		for (int y = y1 + 1; y < SCREEN_HEIGHT; y++)
-		{
-			double h = (double)(SCREEN_HEIGHT - 1 - y) / SCREEN_HEIGHT;
-            double D = ec / (1. - 2 * h);
-            double lum_f = get_luminosity(var, D) - 0.2;
-
-			var->image.addr[y * var->image.size_line / 4 + (x + 10 + var->game.map_width * PIXEL_SIZE)] = fade_color(var->image.ceilling_color, lum_f);
-			var->image.addr[(SCREEN_HEIGHT - 1 -y) * var->image.size_line / 4 + (x + 10 + var->game.map_width * PIXEL_SIZE)] = fade_color(var->image.floor_color, lum_f);
-		}
+		tmp.ty = (int)((double)((tmp.y - tmp.y0) * 64) / tmp.wh);
+		tmp.tex = wall->wdir;
+		if (wall->door == CLOSE_DOOR)
+			tmp.tex = DIR_DOOR;
+		tmp.color = var->texture[tmp.tex]
+			.texture_image[64 * tmp.ty + wall->wtx];
+		tmp.color = fade_color(tmp.color, tmp.lum);
+		var->image.addr[tmp.y * var->image.size_line / 4
+			+ (x + 10 + var->game.map_width * PIXEL_SIZE)] = tmp.color;
+		tmp.y++;
 	}
+	if (tmp.y1 < SCREEN_HEIGHT - 1)
+		draw_ceil_floor(var, x, tmp.y1);
 }
