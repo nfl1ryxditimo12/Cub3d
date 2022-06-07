@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:25:15 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/06 20:00:50 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/07 19:11:09 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int	check_valid_door(t_map **map, int row, int col)
 		flag++;
 	if (map[row][col - 1] != WALL || map[row][col + 1] != WALL)
 		flag++;
-	printf("%d\n", flag);
 	if (flag == 2)
 		return (1);
 	return (0);

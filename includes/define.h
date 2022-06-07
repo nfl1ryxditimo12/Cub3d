@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:56:16 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/06 21:19:18 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/07 17:03:06 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,40 +44,28 @@
 
 /* =========================== */
 
-#define  EPS            1e-06
-#define  is_zero(d)     (fabs(d) < EPS)
-#define  deg2rad(d)     ((d)*M_PI/180.0)    /* degree to radian */
-#define  rad2deg(d)     ((d)*180.0/M_PI)    /* radian to degree */
-#define  min(a,b)       ((a)<(b)? (a):(b))
-#define  max(a,b)       ((a)>(b)? (a):(b))
+# define  EPS	1e-06
 
-#define  SCREEN_WIDTH         1200     /* screen width */
-#define  SCREEN_HEIGHT         800     /* screen height */
-#define  FOV        60      /* field of view (in degree) */
-#define  FOV_H      deg2rad(FOV)
-#define  FOV_V      (FOV_H*(double)SCREEN_HEIGHT/(double)SCREEN_WIDTH)
-#define  WALL_H     1.0
-# define TEST		WALL_H + FOV
+# define  SCREEN_WIDTH		1200     /* screen width */
+# define  SCREEN_HEIGHT		800     /* screen height */
+# define  FOV				60      /* field of view (in degree) */
+# define  WALL_H			1.0
 
+# define  _2PI		6.28318530717958647692  /* 2 * M_PI */
 
-#define  MAPX   14
-#define  MAPY   33
-
-# define  _2PI       6.28318530717958647692  /* 2 * M_PI */
-
-# define  ROT_UNIT   0.06    /* rad */
-# define  MOVE_UNIT  0.15
+# define  ROT_UNIT	0.06    /* rad */
+# define  MOVE_UNIT	0.15
 
 # define BUFFER_SIZE	1000000
 
-# define IDENTIFIER_NORTH		"NO"
-# define IDENTIFIER_SOUTH		"SO"
-# define IDENTIFIER_WEST		"WE"
-# define IDENTIFIER_EAST		"EA"
-# define IDENTIFIER_DOOR		"DO"
-# define IDENTIFIER_FLOOR		"F"
-# define IDENTIFIER_CEILLING	"C"
-# define IDENTIFIER_SPRITE		"SP"
+# define IDENTIFIER_NORTH			"NO"
+# define IDENTIFIER_SOUTH			"SO"
+# define IDENTIFIER_WEST			"WE"
+# define IDENTIFIER_EAST			"EA"
+# define IDENTIFIER_DOOR			"DO"
+# define IDENTIFIER_FLOOR			"F"
+# define IDENTIFIER_CEILLING		"C"
+# define IDENTIFIER_SPRITE			"SP"
 # define IDENTIFIER_SPRITE_ONE		"SP_1"
 # define IDENTIFIER_SPRITE_TWO		"SP_2"
 # define IDENTIFIER_SPRITE_THREE	"SP_3"

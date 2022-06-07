@@ -22,6 +22,7 @@ typedef struct s_sprite				t_sprite;
 typedef struct s_draw_wall_var		t_draw_wall_var;
 typedef struct s_draw_sprite_var	t_draw_sprite_var;
 typedef struct s_offset				t_offset;
+typedef struct s_intersection	t_intersection;
 
 struct	s_offset
 {
@@ -120,6 +121,27 @@ struct	s_sprite
 	double	sx;
 	double	sy;
 	double	sdist;
+};
+
+struct	s_intersection
+{
+	int		cell;
+	int		mapx;
+	int		mapy;
+	int		xstep;
+	int		ystep;
+	int		hit;
+	int		hit_side;
+	double	px;
+	double	py;
+	double	nx;
+	double	ny;
+	double	xslope;
+	double	yslope;
+	double	func;
+	double	gunc;
+	double	dist_v;
+	double	dist_h;
 };
 
 #endif

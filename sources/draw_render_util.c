@@ -12,6 +12,20 @@
 
 #include "cub3d.h"
 
+int	max(int a, int b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
+
+int	min(int a, int b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}
+
 // sprite 그려줌
 void	draw_sprite(t_var *var, t_sprite *sprite, int x)
 {
