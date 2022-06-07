@@ -6,7 +6,7 @@
 /*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 21:55:25 by seunpark          #+#    #+#             */
-/*   Updated: 2022/06/07 19:24:54 by seunpark         ###   ########.fr       */
+/*   Updated: 2022/06/07 19:36:54 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,23 @@
  * 텍스쳐 데이터 6개 파싱 -> 맵 데이터 파싱 -> 맵 데이터 유효성 검사 -> 맵 데이터 구조체 할당
  */
 
-int			parse_cub3d_data(t_var *var, char *filename);
-int			check_valid_map(t_var *var);
+int		parse_cub3d_data(t_var *var, char *filename);
+int		check_valid_map(t_var *var);
 
-int			encode_color(int r, int g, int b);
+int		encode_color(int r, int g, int b);
 
-int			parse_error(int errno, char *level, char *err);
-int			close_window(t_var *var);
+int		parse_error(int errno, char *level, char *err);
+int		close_window(t_var *var);
 
-void		handling_door(t_var *var, t_wall *wall);
+void	handling_door(t_var *var, t_wall *wall);
 
 /* ============================================= */
 /*                 Ray Casting                   */
 /* ============================================= */
 
 /* ray_casting.c */
-void	get_wall_intersection(t_var *var, double ray, t_wall *wall, t_sprite *sprite);
+void	get_wall_intersection(t_var *var, double ray,
+			t_wall *wall, t_sprite *sprite);
 void	cast_single_ray(t_var *var, int x, t_wall *wall, t_sprite *sprite);
 void	ray_casting(t_var *var, t_wall *wall, t_sprite *sprite);
 int		put_element_coordinate(t_intersection *inter, t_wall *wall, \
@@ -76,7 +77,7 @@ double	fov_h(void);
 double	fov_v(void);
 
 /* ray_casting_render_util.c */
-int		is_zero(double	d);
+int		is_zero(double d);
 int		determin_angle(double d);
 int		map_get_cell(t_game *game, int x, int y);
 int		get_wall_height(double dist);
@@ -95,99 +96,99 @@ void	put_horizontal_element_coord(t_intersection *inter, t_wall *wall, \
 /* ============================================= */
 
 /* draw.c */
-void		draw_game(t_var *var);
+void	draw_game(t_var *var);
 
 /* draw_map_util.c */
-void		draw_line(t_image *image, t_offset p1, t_offset p2, int color);
-void		draw_rectangle(t_var *var, int x, int y, int color);
-void		draw_rectangles(t_var *var);
+void	draw_line(t_image *image, t_offset p1, t_offset p2, int color);
+void	draw_rectangle(t_var *var, int x, int y, int color);
+void	draw_rectangles(t_var *var);
 
 /* draw_render_util.c */
-void		draw_sprite(t_var *var, t_sprite *sprite, int x);
-void		draw_wall(t_var *var, t_wall *wall, int x);
+void	draw_sprite(t_var *var, t_sprite *sprite, int x);
+void	draw_wall(t_var *var, t_wall *wall, int x);
 
 /* ============================================= */
 /*                     Init                      */
 /* ============================================= */
 
 /* init.c */
-int			cub3d_init(t_var *var, char *filename);
-int			main_loop(t_var *var);
-void		image_init(t_var *var);
-void		mlx_image_put(t_var *var);
+int		cub3d_init(t_var *var, char *filename);
+int		main_loop(t_var *var);
+void	image_init(t_var *var);
+void	mlx_image_put(t_var *var);
 
 /* ============================================= */
 /*                      Key                      */
 /* ============================================= */
 
 /* key.c */
-int			player_move(t_game *game, int key);
-void		player_rotate(t_game *pp, double th);
-int			deal_key(int key_code, t_var *var);
+int		player_move(t_game *game, int key);
+void	player_rotate(t_game *pp, double th);
+int		deal_key(int key_code, t_var *var);
 
 /* ============================================= */
 /*                     Parse                     */
 /* ============================================= */
 
 /* parse_file_util.c */
-int			check_file_extension(char *filename, char *extension);
-char		*read_file(char *filename);
-char		*get_filename(char *buffer);
+int		check_file_extension(char *filename, char *extension);
+char	*read_file(char *filename);
+char	*get_filename(char *buffer);
 
 /* parse_map_util.c */
-int			is_empty_line(char *buffer);
-int			get_map_size(char *buffer);
-void		insert_map_data(t_map *line, char data);
+int		is_empty_line(char *buffer);
+int		get_map_size(char *buffer);
+void	insert_map_data(t_map *line, char data);
 
 /* parse_element_util.c */
-int			load_texture(void *mlx, t_texture *texture, char *filename);
-int			ft_atoi_max_unsigned_char(char *str, int *dest, int *flag);
-int			load_color(int *dest, char *color_data);
-int			get_sprite(t_var *var, char *buffer);
+int		load_texture(void *mlx, t_texture *texture, char *filename);
+int		ft_atoi_max_unsigned_char(char *str, int *dest, int *flag);
+int		load_color(int *dest, char *color_data);
+int		get_sprite(t_var *var, char *buffer);
 
 /* parse_util.c */
-int			check_newline(char **arr);
-int			until_next_space(char *str);
-int			get_line_size(char *str);
+int		check_newline(char **arr);
+int		until_next_space(char *str);
+int		get_line_size(char *str);
 
 /* ============================================= */
 /*                     Check                     */
 /* ============================================= */
 
 /* check_resize_util.c */
-int			get_map_line_size(t_map *line);
-t_map		*resize_line(t_map *line, int max_size, int line_size);
+int		get_map_line_size(t_map *line);
+t_map	*resize_line(t_map *line, int max_size, int line_size);
 
 /* check_wall_util.c */
-int			check_double_map(t_var *var);
-void		substitution_wall(t_var *var, int row, int col);
-void		restore_wall(t_var *var, int row, int col);
+int		check_double_map(t_var *var);
+void	substitution_wall(t_var *var, int row, int col);
+void	restore_wall(t_var *var, int row, int col);
 
 /* check_element_util.c */
-int			check_around_elements(t_var *var, int row, int col, int flag);
-int			is_player_element(t_map elem);
-int			set_player_pos(t_var *var, int row, int col);
-int			check_valid_door(t_map **map, int row, int col);
+int		check_around_elements(t_var *var, int row, int col, int flag);
+int		is_player_element(t_map elem);
+int		set_player_pos(t_var *var, int row, int col);
+int		check_valid_door(t_map **map, int row, int col);
 
 /* ============================================= */
 /*                     Util                      */
 /* ============================================= */
 
 /* memory_util.c */
-void		*ft_alloc(int size);
-void		**ft_dalloc(int size);
-void		free_memory(t_var *var, int errno);
+void	*ft_alloc(int size);
+void	**ft_dalloc(int size);
+void	free_memory(t_var *var, int errno);
 
 /* libft_util.c */
-int			ft_str_len(char *str);
-int			ft_strcmp(char *s1, char *s2);
-int			ft_max(int a, int b);
-char		*ft_strdup(char *str);
+int		ft_str_len(char *str);
+int		ft_strcmp(char *s1, char *s2);
+int		ft_max(int a, int b);
+char	*ft_strdup(char *str);
 
 /* color_util.c */
-int			encode_color(int r, int g, int b);
-int			fade_color(int color, double lum);
-void		decode_color(int color, int *r, int *g, int *b);
-double		get_luminosity(t_var *var, double dist);
+int		encode_color(int r, int g, int b);
+int		fade_color(int color, double lum);
+void	decode_color(int color, int *r, int *g, int *b);
+double	get_luminosity(t_var *var, double dist);
 
 #endif

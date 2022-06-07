@@ -6,7 +6,7 @@
 /*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:38:15 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/07 16:53:51 by seunpark         ###   ########.fr       */
+/*   Updated: 2022/06/07 19:38:56 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,23 @@ void	cast_single_ray(t_var *var, int x, t_wall *wall, t_sprite *sprite)
 	sprite->sdist = dist * cos(var->game.angle - ray);
 }
 
+void	get_texture_x_coord(t_wall *wall, t_sprite *sprite)
+{
+	if (wall->wdir == DIR_WEST || wall->wdir == DIR_EAST)
+		wall->wtx = (int)((wall->wy - floor(wall->wy)) * 64);
+	else
+		wall->wtx = (int)((wall->wx - floor(wall->wx)) * 64);
+	if (sprite->sdir == DIR_WEST || sprite->sdir == DIR_EAST)
+		sprite->stx = (int)((sprite->sy - floor(sprite->sy)) * 64);
+	else
+		sprite->stx = (int)((sprite->sx - floor(sprite->sx)) * 64);
+}
+
 void	ray_casting(t_var *var, t_wall *wall, t_sprite *sprite)
 {
-	int		x;
+	int			x;
+	t_offset	p1;
+	t_offset	p2;
 
 	x = -1;
 	while (++x < SCREEN_WIDTH)
@@ -81,18 +95,14 @@ void	ray_casting(t_var *var, t_wall *wall, t_sprite *sprite)
 		cast_single_ray(var, x, &wall[x], &sprite[x]);
 		if (x >= SCREEN_WIDTH / 2 - 10 && x <= SCREEN_WIDTH / 2 + 10)
 			handling_door(var, &wall[x]);
-		if (wall[x].wdir == DIR_WEST || wall[x].wdir == DIR_EAST)
-			wall[x].wtx = (int)((wall[x].wy - floor(wall[x].wy)) * 64);
-		else
-			wall[x].wtx = (int)((wall[x].wx - floor(wall[x].wx)) * 64);
-		if (sprite[x].sdir == DIR_WEST || sprite[x].sdir == DIR_EAST)
-			sprite[x].stx = (int)((sprite[x].sy - floor(sprite[x].sy)) * 64);
-		else
-			sprite[x].stx = (int)((sprite[x].sx - floor(sprite[x].sx)) * 64);
+		get_texture_x_coord(&wall[x], &sprite[x]);
 		draw_wall(var, &wall[x], x);
 		if (sprite[x].sx != -1)
 			draw_sprite(var, &sprite[x], x);
-		draw_line(&var->image, var->game.m_py, var->game.m_px, wall[x].wy * \
-			(double)PIXEL_SIZE, wall[x].wx * (double)PIXEL_SIZE, RAY_COLOR);
+		p1.x = var->game.m_py;
+		p1.y = var->game.m_px;
+		p2.x = wall[x].wy * (double)PIXEL_SIZE;
+		p2.y = wall[x].wx * (double)PIXEL_SIZE;
+		draw_line(&var->image, p1, p2, RAY_COLOR);
 	}
 }

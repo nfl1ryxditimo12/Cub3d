@@ -6,7 +6,7 @@
 /*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:52:34 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/07 19:22:22 by seunpark         ###   ########.fr       */
+/*   Updated: 2022/06/07 19:37:00 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct s_sprite				t_sprite;
 typedef struct s_draw_wall_var		t_draw_wall_var;
 typedef struct s_draw_sprite_var	t_draw_sprite_var;
 typedef struct s_offset				t_offset;
-typedef struct s_intersection	t_intersection;
+typedef struct s_intersection		t_intersection;
 
 struct	s_offset
 {
