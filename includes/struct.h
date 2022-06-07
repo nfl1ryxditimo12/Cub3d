@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:52:34 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/06 20:31:50 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/07 17:22:38 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct s_var			t_var;
 typedef struct s_texture		t_texture;
 typedef struct s_wall			t_wall;
 typedef struct s_sprite			t_sprite;
+typedef struct s_intersection	t_intersection;
 
 struct	s_texture
 {
@@ -85,6 +86,27 @@ struct	s_sprite
 	double	sx;
 	double	sy;
 	double	sdist;
+};
+
+struct	s_intersection
+{
+	int		cell;
+	int		mapx;
+	int		mapy;
+	int		xstep;
+	int		ystep;
+	int		hit;
+	int		hit_side;
+	double	px;
+	double	py;
+	double	nx;
+	double	ny;
+	double	xslope;
+	double	yslope;
+	double	func;
+	double	gunc;
+	double	dist_v;
+	double	dist_h;
 };
 
 #endif

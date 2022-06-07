@@ -6,7 +6,7 @@
 #    By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/24 21:04:46 by seunpark          #+#    #+#              #
-#    Updated: 2022/06/06 19:53:12 by seonkim          ###   ########.fr        #
+#    Updated: 2022/06/07 19:08:20 by seonkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,11 @@ SOURCES			=	main.c\
 					parse_map_util.c\
 					parse_util.c\
 					parse.c\
+					ray_casting_init.c\
+					ray_casting_intersection_util.c\
 					ray_casting_math_util.c\
+					ray_casting_render_util.c\
+					ray_casting_view_util.c\
 					ray_casting.c
 
 MLX_DYLIB		=	$(addprefix $(MLX_DIR), libmlx.dylib)

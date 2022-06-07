@@ -6,7 +6,7 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 21:55:25 by seunpark          #+#    #+#             */
-/*   Updated: 2022/06/06 19:52:59 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/07 19:08:13 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,42 @@ void handling_door(t_var *var, t_wall *wall);
 /* ============================================= */
 
 /* ray_casting.c */
-t_bool	get_wall_intersection(t_var *var, double ray, t_wall *wall, t_sprite *sprite);
+void	get_wall_intersection(t_var *var, double ray, t_wall *wall, t_sprite *sprite);
 void	cast_single_ray(t_var *var, int x, t_wall *wall, t_sprite *sprite);
 void	ray_casting(t_var *var, t_wall *wall, t_sprite *sprite);
+int		put_element_coordinate(t_intersection *inter, t_wall *wall, \
+											t_sprite *sprite);
+
+/* ray_casting_init.c */
+void	init_intersection(t_var *var, t_intersection *inter, double ray);
+void	init_ray_casting(t_wall *wall, t_sprite *sprite);
 
 /* ray_casting_math_util.c */
-int	sgn( double d );
-double	l2dist( double x0, double y0, double x1, double y1 );
-int	map_get_cell(t_game *game, int x, int y );
-int	get_wall_height( double dist );
+double	get_dist(double x0, double y0, double x1, double y1);
 double	get_fov_min_dist(void);
+double	degree_to_radian(double degree);
+double	radian_to_degree(double radian);
+double	angle_per_pixel(void);
+
+/* ray_casting_view_util.c */
+double	fov_h_2(void);
+double	fov_h(void);
+double	fov_v(void);
+
+/* ray_casting_render_util.c */
+int		is_zero(double	d);
+int		determin_angle(double d);
+int		map_get_cell(t_game *game, int x, int y);
+int		get_wall_height(double dist);
+
+/* ray_casting_intersection_util.c */
+void	get_slope(t_intersection *inter, double ray);
+void	get_map_coordinate(t_intersection *inter);
+void	get_next_distance(t_intersection *inter);
+void	put_vertical_element_coord(t_intersection *inter, t_wall *wall, \
+											t_sprite *sprite);
+void	put_horizontal_element_coord(t_intersection *inter, t_wall *wall, \
+											t_sprite *sprite);
 
 /* ============================================= */
 /*                     Draw                      */
@@ -96,7 +122,7 @@ void	mlx_image_put(t_var *var);
 /* ============================================= */
 
 /* key.c */
-int		player_move(t_game* game, int key, double amt );
+int		player_move(t_game* game, int key);
 void	player_rotate(t_game* pp, double th );
 int		deal_key(int key_code, t_var *var);
 

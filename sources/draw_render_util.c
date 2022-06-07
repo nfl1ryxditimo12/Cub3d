@@ -6,11 +6,25 @@
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:45:00 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/06 21:16:04 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/07 18:56:52 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	max(int a, int b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
+
+int	min(int a, int b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}
 
 // sprite 그려줌
 void	draw_sprite(t_var *var, t_sprite *sprite, int x)
