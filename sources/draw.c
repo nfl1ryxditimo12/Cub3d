@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:35:12 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/06 20:25:42 by seonkim          ###   ########.fr       */
+/*   Updated: 2022/06/07 19:09:59 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,20 @@ void	draw_object(t_var *var)
 // 위와 동일
 void	draw_mini_map(t_var *var)
 {
-	int	i;
+	int			i;
+	t_offset	p1;
+	t_offset	p2;
 
 	i = -1;
 	draw_rectangles(var);
 	while (++i < 10)
-		draw_line(&var->image, i + (var->game.map_width * PIXEL_SIZE), 0, i + \
-		(var->game.map_width * PIXEL_SIZE), (double)SCREEN_HEIGHT, 0xFFFFFF);
+	{
+		p1.x = i + (var->game.map_width * PIXEL_SIZE);
+		p1.y = 0;
+		p2.x = i + (var->game.map_width * PIXEL_SIZE);
+		p2.y = (double)SCREEN_HEIGHT;
+		draw_line(&var->image, p1, p2, 0xFFFFFF);
+	}
 }
 
 void	draw_player(t_var *var)

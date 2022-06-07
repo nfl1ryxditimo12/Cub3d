@@ -6,7 +6,7 @@
 /*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:52:34 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/07 18:52:56 by seunpark         ###   ########.fr       */
+/*   Updated: 2022/06/07 19:22:22 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,13 @@ typedef struct s_wall				t_wall;
 typedef struct s_sprite				t_sprite;
 typedef struct s_draw_wall_var		t_draw_wall_var;
 typedef struct s_draw_sprite_var	t_draw_sprite_var;
+typedef struct s_offset				t_offset;
 
+struct	s_offset
+{
+	double	x;
+	double	y;
+};
 
 struct	s_draw_wall_var
 {
@@ -71,7 +77,7 @@ struct	s_image
 
 struct	s_game
 {
-	t_map		**map;	// N x M 만큼의 동적할당
+	t_map		**map;
 	int			map_width;
 	int			map_height;
 	double		px;
@@ -89,7 +95,7 @@ struct	s_var
 	void		*win;
 	t_game		game;
 	t_image		image;
-	t_texture	*texture; // N개의 텍스쳐 만큼 동적할당
+	t_texture	*texture;
 };
 
 struct	s_wall
