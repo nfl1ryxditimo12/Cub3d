@@ -1,0 +1,8 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/seunpark/Desktop/Cub3d'
+gcc -Wall -Wextra -Werror -I includes/ -c sources/main.c -o objects/main.o
+make --directory=minilibx_mms_20210621/
+cp ./minilibx_mms_20210621/libmlx.dylib ./
+gcc -Wall -Wextra -Werror -L./ -lmlx objects/main.o -o cub3D
+make: Leaving directory `/Users/seunpark/Desktop/Cub3d'
+ 
