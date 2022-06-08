@@ -6,7 +6,7 @@
 /*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:16:50 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/07 21:59:58 by seunpark         ###   ########.fr       */
+/*   Updated: 2022/06/08 16:32:54 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,13 @@ int	set_texture(t_var *var, char *buffer)
 int	check_essential_elements(t_var *var, char **buffer)
 {
 	int	flag;
+	int	idx;
 
 	flag = 0;
 	var->texture = (t_texture *)ft_alloc(sizeof(t_texture) * 11);
+	idx = -1;
+	while (++idx < 11)
+		var->texture[idx].texture_image = NULL;
 	while (**buffer && flag != ESSENTIAL_ELEMENTS)
 	{
 		while (**buffer == 32 || **buffer == 9)

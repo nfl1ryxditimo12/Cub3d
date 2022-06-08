@@ -6,7 +6,7 @@
 /*   By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 21:55:25 by seunpark          #+#    #+#             */
-/*   Updated: 2022/06/07 21:54:33 by seunpark         ###   ########.fr       */
+/*   Updated: 2022/06/08 17:06:39 by seunpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@
  * return value 2 -> failed (need texture struct free)
  * return value 3 -> failed (need texture struct, map array free)
  *
- * six texture file parsing -> parsing map data -> validate map data -> allow struct map data
+ * six texture file parsing
+ * -> parsing map data
+ * -> validate map data
+ * -> allow struct map data
  */
 
 int		parse_cub3d_data(t_var *var, char *filename);
