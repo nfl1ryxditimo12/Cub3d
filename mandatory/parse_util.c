@@ -1,33 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parse_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/31 18:01:15 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/07 21:58:39 by seonkim          ###   ########.fr       */
+/*   Created: 2022/06/06 19:12:27 by seonkim           #+#    #+#             */
+/*   Updated: 2022/06/07 21:51:11 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	test(char *filename)
+int	check_newline(char **arr)
 {
-	t_var	var;
+	int	size;
 
-	if (cub3d_init(&var, filename))
-		exit(1);
-	mlx_put_image_to_window(var.mlx, var.win, var.image.image, 0, 0);
-	mlx_loop_hook(var.mlx, &main_loop, &var);
-	mlx_loop(var.mlx);
+	if (!arr || !*arr)
+		return (0);
+	size = 0;
+	while (arr[size])
+		size++;
+	return (size);
 }
 
-int	main(int ac, char **av)
+int	until_next_space(char *str)
 {
-	if (ac != 2)
-		return (parse_error(1, ERROR_LEVEL, INVALID_FILENAME));
-	test(av[1]);
-	system("leaks cub3D | grep Process");
-	return (0);
+	int	len;
+
+	len = 0;
+	while (str[len] && (str[len] != 32 && str[len] != 9))
+		len++;
+	return (len);
+}
+
+int	get_line_size(char *str)
+{
+	int	len;
+
+	len = 0;
+	while (str[len] && str[len] != '\n')
+		len++;
+	if (str[len] == '\n')
+		len++;
+	return (len);
 }
