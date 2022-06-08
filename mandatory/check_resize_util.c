@@ -1,33 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   check_resize_util.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/31 18:01:15 by seonkim           #+#    #+#             */
-/*   Updated: 2022/06/07 21:58:39 by seonkim          ###   ########.fr       */
+/*   Created: 2022/06/06 19:21:43 by seonkim           #+#    #+#             */
+/*   Updated: 2022/06/07 21:51:11 by seonkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	test(char *filename)
+int	get_map_line_size(t_map *line)
 {
-	t_var	var;
+	int	len;
 
-	if (cub3d_init(&var, filename))
-		exit(1);
-	mlx_put_image_to_window(var.mlx, var.win, var.image.image, 0, 0);
-	mlx_loop_hook(var.mlx, &main_loop, &var);
-	mlx_loop(var.mlx);
+	len = 0;
+	while (line[len] != '\n')
+		len++;
+	return (len);
 }
 
-int	main(int ac, char **av)
+t_map	*resize_line(t_map *line, int max_size, int line_size)
 {
-	if (ac != 2)
-		return (parse_error(1, ERROR_LEVEL, INVALID_FILENAME));
-	test(av[1]);
-	system("leaks cub3D | grep Process");
-	return (0);
+	t_map	*dest;
+	int		idx;
+
+	dest = (t_map *)ft_alloc(sizeof(t_map) * max_size + 1);
+	idx = -1;
+	while (++idx < line_size)
+		dest[idx] = line[idx];
+	idx--;
+	while (++idx < max_size)
+		dest[idx] = EMPTY_SPACE;
+	dest[idx] = '\n';
+	free(line);
+	return (dest);
 }
