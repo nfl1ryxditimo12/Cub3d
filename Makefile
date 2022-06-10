@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: seonkim <seonkim@student.42seoul.kr>       +#+  +:+       +#+         #
+#    By: seunpark <seunpark@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/24 21:04:46 by seunpark          #+#    #+#              #
-#    Updated: 2022/06/07 22:11:27 by seonkim          ###   ########.fr        #
+#    Updated: 2022/06/08 17:43:37 by seunpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,30 +80,41 @@ OBJ_DIR			=	objects/
 OBJ_FILES		=	$(MANDATORY_SRC:.c=.o)
 OBJECTS			=	$(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
+OBJ_BONUS_DIR			=	objects/
 OBJ_BONUS_FILES	=	$(BONUS_SRC:.c=.o)
 OBJECTS_BONUS	=	$(addprefix $(OBJ_DIR), $(OBJ_BONUS_FILES))
 
 MKDIR			=	$(shell mkdir $(OBJ_DIR) 2> /dev/null)
+
+
+
+ifdef IS_BONUS
+	OBJ = $(OBJECTS_BONUS)
+else
+	OBJ =  $(OBJECTS)
+endif
 
 all		:	$(MKDIR) $(NAME)
 
 $(OBJ_DIR)%.o	:	$(MANDATORY_DIR)%.c
 	$(CC) $(CFLAGS) -I $(MLX_DIR) -I $(INC_MANDATORY_DIR) -c $< -o $@
 
-$(NAME)	:	$(OBJECTS)
-	$(MAKE) -C $(MLX_DIR) all
-	cp $(MLX_DYLIB) ./
-	$(CC) $(CFLAGS) -L $(MLX_DIR) $(MLXFLAG) $(OBJECTS) -o $(NAME)
+$(OBJ_BONUS_DIR)%.o	:	$(BONUS_DIR)%.c
+	$(CC) $(CFLAGS) -I $(MLX_DIR) -I $(INC_BONUS_DIR) -c $< -o $@
 
-bonus	: $(OBJECTS_BONUS)
+$(NAME)	:	$(OBJ)
 	$(MAKE) -C $(MLX_DIR) all
 	cp $(MLX_DYLIB) ./
-	$(CC) $(CFLAGS) -L $(MLX_DIR) $(MLXFLAG) $(OBJECTS_BONUS) -o $(NAME)
+	$(CC) $(CFLAGS) -L $(MLX_DIR) $(MLXFLAG) $(OBJ) -o $(NAME)
+
+bonus	:
+	@make IS_BONUS=1 all
 
 clean	:
 	$(MAKE) -C $(MLX_DIR) clean
 	rm -rf $(OBJ_DIR)
 	rm -rf .vscode
+	rm -rf libmlx.dylib
 
 fclean	:	clean
 	rm -rf $(NAME)
